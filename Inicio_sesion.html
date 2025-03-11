@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecoblog</title>
-    <link rel="stylesheet" href="styleis.css">
+    <link rel="stylesheet" href="iniciosesion.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
     <div class="wrapper">
-        <form action="">
+        <form action="index.html" method="GET" id="loginForm">
 
             <h1> INICIO DE SESION </h1>
             <div class="input-box">
@@ -25,12 +25,20 @@
                 <label><input type="checkbox">Recordar</label>
                 <a href="#">¿Has olvidado tu contraseña?</a>
             </div>
-            <button type="submit" class="btn">Iniciar sesion</button>
+            <button type="submit" class="btn">Iniciar sesión</button>
 
             <div class="register-link">
                 <p>No tienes cuenta? <a href="#">Crea una</a></p>
             </div>
         </form>
     </div>
+
+    <script>
+        // Redirige al usuario manualmente con JavaScript
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evita el envío del formulario
+            window.location.href = "index.html"; // Redirige a index.html
+        });
+    </script>
 </body>
 </html>

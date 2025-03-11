@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administrador</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background: #2a72ba;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .content {
+            margin-left: 270px;
+            padding: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <h4>ECOBLOG</h4>
+        <a href="#">📊 Dashboard</a>
+        <a href="#">🛠 Componentes</a>
+        <a href="#">🗂 Utilidades</a>
+        <a href="#">📈 Charts</a>
+        <a href="#">📋 Noticias</a>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="content">
+        <h2>Gestión de Noticias</h2>
+        <button class="btn btn-success mb-3" onclick="mostrarFormulario()">Nueva Noticia</button>
+
+        <!-- Formulario de Noticia -->
+        <div id="formulario" style="display: none;">
+            <h4>Agregar Noticia</h4>
+            <input type="text" id="titulo" class="form-control mb-2" placeholder="Título">
+            <input type="text" id="autor" class="form-control mb-2" placeholder="Autor">
+            <input type="date" id="fecha" class="form-control mb-2">
+            <input type="file" id="imagen" class="form-control mb-2">
+            <textarea id="contenido" class="form-control mb-2" placeholder="Contenido de la noticia"></textarea>
+            <button class="btn btn-primary" onclick="agregarNoticia()">Guardar</button>
+        </div>
+
+        <!-- Tabla -->
+        <table class="table table-bordered mt-3">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Fecha</th>
+                    <th>Imagen</th>
+                    <th>Contenido</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tablaNoticias">
+                <!-- Noticias dinámicas -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let noticias = [];
+        let id = 1;
+
+        function mostrarFormulario() {
+            document.getElementById('formulario').style.display = 'block';
+        }
+
+        function agregarNoticia() {
+            let titulo = document.getElementById('titulo').value;
+            let autor = document.getElementById('autor').value;
+            let fecha = document.getElementById('fecha').value;
+            let imagenInput = document.getElementById('imagen');
+            let contenido = document.getElementById('contenido').value;
+            let imagenURL = '';
+
+            if (imagenInput.files.length > 0) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    imagenURL = e.target.result;
+                    guardarNoticia(titulo, autor, fecha, imagenURL, contenido);
+                };
+                reader.readAsDataURL(imagenInput.files[0]);
+            } else {
+                guardarNoticia(titulo, autor, fecha, '', contenido);
+            }
+        }
+
+        function guardarNoticia(titulo, autor, fecha, imagen, contenido) {
+            if (titulo && autor && fecha && contenido) {
+                noticias.push({ id: id++, titulo, autor, fecha, imagen, contenido });
+                actualizarTabla();
+                document.getElementById('formulario').reset();
+            }
+        }
+
+        function eliminarNoticia(id) {
+            noticias = noticias.filter(noticia => noticia.id !== id);
+            actualizarTabla();
+        }
+
+        function actualizarTabla() {
+            let tabla = document.getElementById('tablaNoticias');
+            tabla.innerHTML = '';
+            noticias.forEach(noticia => {
+                tabla.innerHTML += `
+                    <tr>
+                        <td>${noticia.id}</td>
+                        <td>${noticia.titulo}</td>
+                        <td>${noticia.autor}</td>
+                        <td>${noticia.fecha}</td>
+                        <td><img src="${noticia.imagen}" alt="Imagen" width="100"></td>
+                        <td>${noticia.contenido}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" onclick="eliminarNoticia(${noticia.id})">Borrar</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+    </script>
+</body>
+</html>
