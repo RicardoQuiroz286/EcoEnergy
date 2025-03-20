@@ -11,28 +11,32 @@
     <div class="wrapper">
         <form action="index.html" method="GET" id="loginForm">
 
-            <h1> INICIO DE SESION </h1>
+            <h1 id="titulo"> INICIO DE SESION </h1>
             <div class="input-box">
-                <input type="text" placeholder="Correo" required> 
+                <input type="text" placeholder="Correo" id="correo" required> 
                 <i class='bx bxs-user'></i>
             </div>
             <div class="input-box">
-                <input type="password" placeholder="Contraseña" required>
+                <input type="password" placeholder="Contraseña" id="contraseña" required>
                 <i class='bx bxs-lock-alt' ></i>
             </div>
 
             <div class="remember-forgot">
-                <label><input type="checkbox">Recordar</label>
-                <a href="#">¿Has olvidado tu contraseña?</a>
+                <label><input type="checkbox" id="recordar"><span id="recordar-text">Recordar</span></label>
+                <a href="#" id="olvidado">¿Has olvidado tu contraseña?</a>
             </div>
-            <button type="submit" class="btn">Iniciar sesión</button>
+            
+            <button type="submit" class="btn" id="btn-login">Iniciar sesión</button>
 
             <div class="register-link">
-                <p>No tienes cuenta? <a href="#">Crea una</a></p>
+                <p id="sin-cuenta">No tienes cuenta? <a href="#" id="crear-cuenta">Crea una</a></p>
             </div>
+            <select id="language-select">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+            </select>
         </form>
     </div>
-
     <script>
         // Redirige al usuario manualmente con JavaScript
         document.getElementById("loginForm").addEventListener("submit", function(event) {
@@ -40,5 +44,8 @@
             window.location.href = "index.html"; // Redirige a index.html
         });
     </script>
+    
+    <script src="translateInicioSesion.js"></script>
 </body>
 </html>
+

@@ -35,8 +35,6 @@
     </style>
 </head>
 <body>
-
-    <!-- Barra lateral -->
     <div class="sidebar">
         <h4>ECOBLOG</h4>
         <a href="#">📊 Dashboard</a>
@@ -46,23 +44,20 @@
         <a href="#">📋 Noticias</a>
     </div>
 
-    <!-- Contenido principal -->
     <div class="content">
         <h2>Gestión de Noticias</h2>
         <button class="btn btn-success mb-3" onclick="mostrarFormulario()">Nueva Noticia</button>
 
-        <!-- Formulario de Noticia -->
         <div id="formulario" style="display: none;">
             <h4>Agregar Noticia</h4>
-            <input type="text" id="titulo" class="form-control mb-2" placeholder="Título">
-            <input type="text" id="autor" class="form-control mb-2" placeholder="Autor">
-            <input type="date" id="fecha" class="form-control mb-2">
-            <input type="file" id="imagen" class="form-control mb-2">
-            <textarea id="contenido" class="form-control mb-2" placeholder="Contenido de la noticia"></textarea>
+            <input type="text" id="titulo" class="form-control mb-2" placeholder="Título" required>
+            <input type="text" id="autor" class="form-control mb-2" placeholder="Autor" required>
+            <input type="date" id="fecha" class="form-control mb-2" required>
+            <input type="file" id="imagen" class="form-control mb-2" required>
+            <textarea id="contenido" class="form-control mb-2" placeholder="Contenido de la noticia" required></textarea>
             <button class="btn btn-primary" onclick="agregarNoticia()">Guardar</button>
         </div>
 
-        <!-- Tabla -->
         <table class="table table-bordered mt-3">
             <thead class="table-light">
                 <tr>
@@ -75,70 +70,146 @@
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody id="tablaNoticias">
-                <!-- Noticias dinámicas -->
-            </tbody>
+            <tbody id="tablaNoticias"></tbody>
         </table>
     </div>
 
+    <!-- Modal de Edición -->
+    <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditarLabel">Editar Noticia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="editId">
+                    <label>Título</label>
+                    <input type="text" id="editTitulo" class="form-control mb-2" required>
+                    <label>Autor</label>
+                    <input type="text" id="editAutor" class="form-control mb-2" required>
+                    <label>Fecha</label>
+                    <input type="date" id="editFecha" class="form-control mb-2" required>
+                    <label>Contenido</label>
+                    <textarea id="editContenido" class="form-control mb-2" required></textarea>
+                    <label>Imagen Actual</label>
+                    <img id="editImagenActual" src="" width="100" class="mb-2 d-block">
+                    <label>Nueva Imagen (opcional)</label>
+                    <input type="file" id="editImagen" class="form-control mb-2">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarEdicion()">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        let noticias = [];
-        let id = 1;
+        document.addEventListener("DOMContentLoaded", actualizarTabla);
 
         function mostrarFormulario() {
             document.getElementById('formulario').style.display = 'block';
         }
 
-        function agregarNoticia() {
-            let titulo = document.getElementById('titulo').value;
-            let autor = document.getElementById('autor').value;
-            let fecha = document.getElementById('fecha').value;
-            let imagenInput = document.getElementById('imagen');
-            let contenido = document.getElementById('contenido').value;
-            let imagenURL = '';
-
-            if (imagenInput.files.length > 0) {
-                let reader = new FileReader();
-                reader.onload = function (e) {
-                    imagenURL = e.target.result;
-                    guardarNoticia(titulo, autor, fecha, imagenURL, contenido);
-                };
-                reader.readAsDataURL(imagenInput.files[0]);
-            } else {
-                guardarNoticia(titulo, autor, fecha, '', contenido);
-            }
+        function actualizarTabla() {
+            fetch("cargar_noticias.php")
+                .then(response => response.json())
+                .then(data => {
+                    let tabla = document.getElementById('tablaNoticias');
+                    tabla.innerHTML = '';
+                    data.forEach(noticia => {
+                        tabla.innerHTML += `
+                            <tr>
+                                <td>${noticia.idnoticia}</td>
+                                <td>${noticia.titulo}</td>
+                                <td>${noticia.autor}</td>
+                                <td>${noticia.fecha}</td>
+                                <td><img src="${noticia.imagen}" alt="Imagen" width="100"></td>
+                                <td>${noticia.informacion}</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm" onclick="editarNoticia(${noticia.idnoticia})">Editar</button>
+                                    <button class="btn btn-danger btn-sm" onclick="eliminarNoticia(${noticia.idnoticia})">Borrar</button>
+                                </td>
+                            </tr>`;
+                    });
+                })
+                .catch(error => console.error("Error al cargar noticias:", error));
         }
 
-        function guardarNoticia(titulo, autor, fecha, imagen, contenido) {
-            if (titulo && autor && fecha && contenido) {
-                noticias.push({ id: id++, titulo, autor, fecha, imagen, contenido });
-                actualizarTabla();
-                document.getElementById('formulario').reset();
-            }
+        function agregarNoticia() {
+            let formData = new FormData(document.getElementById('formulario'));
+            fetch("guardar_noticia.php", { method: "POST", body: formData })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    alert("Noticia agregada correctamente");
+                    actualizarTabla();
+                } else {
+                    alert("Error al agregar noticia: " + data.message);
+                }
+            })
+            .catch(error => console.error("Error al enviar datos:", error));
         }
 
         function eliminarNoticia(id) {
-            noticias = noticias.filter(noticia => noticia.id !== id);
-            actualizarTabla();
+            if (confirm("¿Estás seguro de que deseas eliminar esta noticia?")) {
+                fetch("eliminar_noticia.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: "idnoticia=" + id
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        alert("Noticia eliminada correctamente");
+                        actualizarTabla();
+                    } else {
+                        alert("Error al eliminar noticia: " + data.message);
+                    }
+                })
+                .catch(error => console.error("Error al eliminar noticia:", error));
+            }
         }
 
-        function actualizarTabla() {
-            let tabla = document.getElementById('tablaNoticias');
-            tabla.innerHTML = '';
-            noticias.forEach(noticia => {
-                tabla.innerHTML += `
-                    <tr>
-                        <td>${noticia.id}</td>
-                        <td>${noticia.titulo}</td>
-                        <td>${noticia.autor}</td>
-                        <td>${noticia.fecha}</td>
-                        <td><img src="${noticia.imagen}" alt="Imagen" width="100"></td>
-                        <td>${noticia.contenido}</td>
-                        <td>
-                            <button class="btn btn-danger btn-sm" onclick="eliminarNoticia(${noticia.id})">Borrar</button>
-                        </td>
-                    </tr>`;
-            });
+        function editarNoticia(id) {
+            fetch("obtener_noticia.php?idnoticia=" + id)
+                .then(response => response.json())
+                .then(noticia => {
+                    document.getElementById("editId").value = noticia.idnoticia;
+                    document.getElementById("editTitulo").value = noticia.titulo;
+                    document.getElementById("editAutor").value = noticia.autor;
+                    document.getElementById("editFecha").value = noticia.fecha;
+                    document.getElementById("editContenido").value = noticia.informacion;
+                    document.getElementById("editImagenActual").src = noticia.imagen;
+
+                    // Mostrar el modal
+                    new bootstrap.Modal(document.getElementById("modalEditar")).show();
+                })
+                .catch(error => console.error("Error al obtener noticia:", error));
+        }
+
+        function guardarEdicion() {
+            let formData = new FormData();
+            formData.append("idnoticia", document.getElementById("editId").value);
+            formData.append("titulo", document.getElementById("editTitulo").value);
+            formData.append("autor", document.getElementById("editAutor").value);
+            formData.append("fecha", document.getElementById("editFecha").value);
+            formData.append("informacion", document.getElementById("editContenido").value);
+            formData.append("imagen", document.getElementById("editImagen").files[0]);
+
+            fetch("editar_noticia.php", { method: "POST", body: formData })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    alert("Noticia actualizada correctamente");
+                    actualizarTabla();
+                    new bootstrap.Modal(document.getElementById("modalEditar")).hide();
+                } else {
+                    alert("Error al actualizar noticia: " + data.message);
+                }
+            })
+            .catch(error => console.error("Error al actualizar noticia:", error));
         }
     </script>
 </body>
