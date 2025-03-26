@@ -1,0 +1,24 @@
+{
+    "es": {
+        "titulo": "INICIO DE SESION",
+        "correo": "Correo",
+        "contraseña": "Contraseña",
+        "recordar": "Recordar",
+        "olvidado": "¿Has olvidado tu contraseña?",
+        "btn-login": "Iniciar sesión",
+        "sin-cuenta": "No tienes cuenta?",
+        "crear-cuenta": "Crea una"
+    },
+    "en": {
+        "titulo": "LOGIN",
+        "correo": "Email",
+        "contraseña": "Password",
+        "recordar": "Remember",
+        "olvidado": "Forgot your password?",
+        "btn-login": "Login",
+        "sin-cuenta": "Don't have an account?",
+        "crear-cuenta": "Create one"
+    }
+}
+
+  
