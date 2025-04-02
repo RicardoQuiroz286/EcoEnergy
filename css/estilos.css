@@ -166,13 +166,13 @@ form.sign-in-form {
     top: 10%;
     right: 48%;
     transform: translateY(-50%);
-    background: url("/images/L2.jpg") no-repeat center center/contain; 
+    background: url("/img/L2.jpg") no-repeat center center/contain; 
     background-size: contain; 
     transition: 1.8s ease-in-out;
     border-radius: 80%;
     z-index: 6;
     background-color: rgba(0, 0, 0, 0.5); 
-    filter: brightness(60%); 
+    filter: brightness(40%); 
 }
 
 

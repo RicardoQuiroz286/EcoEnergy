@@ -35,7 +35,9 @@ CREATE TABLE `usuarios`(
 DROP TABLE `noticias`
 CREATE TABLE `noticias`(
         `idnoticia`           INT UNSIGNED  NOT NULL AUTO_INCREMENT  COMMENT 'Id de la noticia',
+        `titulo`              varchar(255)  NOT NULL                 COMMENT 'Título de la noticia',
         `fecha`               DATETIME      NOT NULL DEFAULT NOW()   COMMENT 'Fecha en la que la noticia fue publicada',
+        `imagen`              varchar(255)  DEFAULT NULL             COMMENT 'Ruta de la imagen',
         `informacion`         VARCHAR(5000) NOT NULL                 COMMENT 'Informacion relacionada a la noticia',
             PRIMARY KEY(`idnoticia`)
     ) COMMENT='Tabla de las noticias';
