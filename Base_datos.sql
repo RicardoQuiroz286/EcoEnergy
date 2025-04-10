@@ -5,7 +5,7 @@ DROP TABLE `administrador`
 CREATE TABLE `administrador` (
     `idadministrador`   INT UNSIGNED    NOT NULL AUTO_INCREMENT COMMENT 'Id del administrador',
     `correo`            VARCHAR(100)    NOT NULL                COMMENT 'Correo del administrador',
-    `contraseña`        VARCHAR(30)     NOT NULL                COMMENT 'Contraseña',
+    `contraseña`        VARCHAR(255)     NOT NULL                COMMENT 'Contraseña',
     `genero`            ENUM('H', 'M')  NOT NULL                COMMENT 'Género del administrador',
     PRIMARY KEY (`idadministrador`), 
     UNIQUE `_uncorreo` (`correo`),
@@ -21,7 +21,7 @@ DROP TABLE `usuarios`
 CREATE TABLE `usuarios`(
     `idusuario`         INT UNSIGNED    NOT NULL AUTO_INCREMENT COMMENT 'Id del usuario    ',
     `correo`            VARCHAR(100)    NOT NULL                COMMENT 'Correo del usuario',
-    `contraseña`        VARCHAR(30)     NOT NULL                COMMENT 'Contraseña',
+    `contraseña`        VARCHAR(255)     NOT NULL                COMMENT 'Contraseña',
     `genero`            ENUM('H', 'M')  NOT NULL                COMMENT 'Género del usuario',
         PRIMARY KEY(`idusuario`), 
             UNIQUE `_uncorreo` (`correo`),
