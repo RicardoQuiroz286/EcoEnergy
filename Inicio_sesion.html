@@ -1,47 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecoblog</title>
-    <link rel="stylesheet" href="iniciosesion.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href="css/iniciosesion.css">
 </head>
+
 <body>
-    <div class="wrapper">
-        <form action="index.html" method="GET" id="loginForm">
+    <div class="container">
+        <div class="forms-container">
+            <div class="signin-signup">
+                <!-- Formulario de Inicio de Sesión -->
+                <form action="#" class="sign-in-form">
+                    <h2 class="title">Inicia Sesión</h2>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="Nombre de Usuario" required />
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Contraseña" required />
+                    </div>
+                    <div class="remember-forgot">
+                        <label>
+                            <input type="checkbox" id="remember-me"> Recordar contraseña
+                        </label>
+                        <a href="#" id="forgot-password">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <input type="submit" value="Inicia Sesión" class="btn solid" onclick="validateLogin(event)" />
+                </form>
 
-            <h1 id="titulo"> INICIO DE SESION </h1>
-            <div class="input-box">
-                <input type="text" placeholder="Correo" id="correo" required> 
-                <i class='bx bxs-user'></i>
+                <!-- Formulario de Registro con Confirmar Contraseña -->
+                <form action="#" class="sign-up-form" onsubmit="return validateRegister(event)">
+                    <h2 class="title">Regístrate</h2>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="register-username" placeholder="Nombre de usuario" required />
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="register-email" placeholder="Email" required />
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="register-password" placeholder="Contraseña" required />
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="confirm-password" placeholder="Confirmar Contraseña" required />
+                    </div>
+                    <input type="submit" class="btn" value="Registrarse" />
+                </form>
             </div>
-            <div class="input-box">
-                <input type="password" placeholder="Contraseña" id="contraseña" required>
-                <i class='bx bxs-lock-alt' ></i>
-            </div>
+        </div>
 
-            <div class="remember-forgot">
-                <label><input type="checkbox" id="recordar"><span id="recordar-text">Recordar</span></label>
-                <a href="#" id="olvidado">¿Has olvidado tu contraseña?</a>
+        <div class="panels-container">
+            <div class="panel left-panel">
+                <div class="content">
+                    <h3>¿Nuevo Aquí?</h3>
+                    <p>¡Regístrate en segundos y empieza a explorar!</p>
+                    <button class="btn transparent" id="sign-up-btn">Regístrate</button>
+                </div>
             </div>
-            
-            <button type="submit" class="btn" id="btn-login">Iniciar sesión</button>
-
-            <div class="register-link">
-                <p id="sin-cuenta">No tienes cuenta? <a href="#" id="crear-cuenta">Crea una</a></p>
+            <div class="panel right-panel">
+                <div class="content">
+                    <h3>¿Ya tienes cuenta?</h3>
+                    <p>Inicia sesión y continúa explorando</p>
+                    <button class="btn transparent" id="sign-in-btn">Inicia Sesión</button>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
-    <script>
-        // Redirige al usuario manualmente con JavaScript
-        document.getElementById("loginForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Evita el envío del formulario
-            window.location.href = "index.html"; // Redirige a index.html
-        });
-    </script>
-    
-    <script src="translateInicioSesion.js"></script>
+
+    <script src="js/app.js"></script>
 </body>
 </html>
-
