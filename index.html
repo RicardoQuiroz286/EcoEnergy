@@ -20,9 +20,16 @@
             <label for="menu"></label>
             <nav class="navbar">
                 <ul>
-                    <li><a href="noticias.html" id="nav-news">Mas noticias</a></li>
-                    <li><a href="Inicio_sesion.html" id="nav-login">Iniciar sesion</a></li>
+                      <li><a href="noticias.html" id="nav-news">Mas noticias</a></li>
+                     <li><a href="EcoEnergy/Inicio_sesion.html" id="nav-login">Iniciar sesión</a></li>
+                      <li>
+                         <select id="language-selector" onchange="changeLanguage(this.value)">
+                      <option value="es">Español</option>
+                       <option value="en">English</option>
+                          </select>
+                       </li>
                 </ul>
+
             </nav>
 
         </div>
@@ -43,7 +50,7 @@
     <!-- Primera seccion "Presentacion" -->
     <section class="coffee">
         <div class="coffe-content container">
-            <h2 id="section-title-1">¿Que es la ODS 7?</h2>
+            <h2 id="section-title-1">¿Que es el ODS 7?</h2>
             <p class="txt-p" id="section-description-1">
                 La ODS 7 forma parte de los Objetivos de Desarrollo Sostenible de la ONU y busca garantizar el acceso universal a una energía asequible, fiable, sostenible y moderna. Algunos de sus principales objetivos incluyen:
             </p>
@@ -54,7 +61,7 @@
     <main class="services">
 
         <div class="services-content container">
-            <h2 id="section-title-2">METAS DE LA ODS 7</h2>
+            <h2 id="section-title-2">METAS DEL ODS 7</h2>
 
             <div class="blog-content">
                 <div class="blog-2">
@@ -148,18 +155,14 @@
             </div>
         </div>
 
-        <a href="noticias.html" class="btn-1" id="more-news-link">Mas noticias</a>
+        <a href="noticias.php" class="btn-1" id="more-news-link">Mas noticias</a>
 
     </section>
 
     <footer class="footer">
         <div class="footer-content container">
-            <p id="footer-text">&copy; 2025 Eco Blog - Energía Sostenible</p>
+            <p id="footer-text">&copy; 2025 EcoEnergy - Energía Sostenible</p>
         </div>
-        <select id="language-selector" onchange="changeLanguage(this.value)">
-            <option value="es">Español</option>
-            <option value="en">English</option>
-        </select>
     </footer>
 
     <script src="translateIndex.js"></script>

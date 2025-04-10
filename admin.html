@@ -60,23 +60,23 @@
                     <div class="col-md-8">
                         <div class="mb-3">
                             <label for="titulo" class="form-label">Título</label>
-                            <input type="text" class="form-control" id="titulo" required>
+                            <input type="text" class="form-control" id="titulo" name="titulo" required>
                         </div>
                         <div class="mb-3">
                             <label for="autor" class="form-label">Autor</label>
-                            <input type="text" class="form-control" id="autor" required>
+                            <input type="text" class="form-control" id="autor" name="autor">
                         </div>
                         <div class="mb-3">
                             <label for="fecha" class="form-label">Fecha</label>
-                            <input type="date" class="form-control" id="fecha" required>
+                            <input type="date" class="form-control" id="fecha" name="fecha" required>
                         </div>
                         <div class="mb-3">
                             <label for="imagen" class="form-label">Imagen Destacada</label>
-                            <input type="file" class="form-control" id="imagen" accept="image/*" required>
+                            <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
                         </div>
                         <div class="mb-3">
                             <label for="contenido" class="form-label">Contenido</label>
-                            <textarea class="form-control" id="contenido" rows="8" required></textarea>
+                            <textarea class="form-control" id="contenido" name="contenido" rows="8" required></textarea>
                         </div>
                         <button type="button" class="btn btn-primary" onclick="mostrarPreview()">
                             <i class="fas fa-eye"></i> Vista Previa
@@ -93,7 +93,7 @@
                             <div class="card-body">
                                 <div class="mb-3">
                                     <label for="categoria" class="form-label">Categoría</label>
-                                    <select class="form-select" id="categoria">
+                                    <select class="form-select" id="categoria" name="categoria">
                                         <option value="energia">Energía</option>
                                         <option value="sostenibilidad">Sostenibilidad</option>
                                         <option value="tecnologia">Tecnología</option>
@@ -101,10 +101,10 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="tags" class="form-label">Etiquetas (separadas por comas)</label>
-                                    <input type="text" class="form-control" id="tags">
+                                    <input type="text" class="form-control" id="tags" name="tags">
                                 </div>
                                 <div class="form-check form-switch mb-3">
-                                    <input class="form-check-input" type="checkbox" id="destacada">
+                                    <input class="form-check-input" type="checkbox" id="destacada" name="destacada">
                                     <label class="form-check-label" for="destacada">Noticia Destacada</label>
                                 </div>
                             </div>
@@ -112,6 +112,8 @@
                     </div>
                 </div>
             </form>
+        </div>
+
 
             <!-- Vista previa -->
             <div id="noticia-preview" class="noticia-preview">
@@ -337,27 +339,28 @@
 
         function agregarNoticia() {
             let formData = new FormData(document.getElementById('formulario'));
-            formData.append('categoria', document.getElementById('categoria').value);
-            formData.append('tags', document.getElementById('tags').value);
-            formData.append('destacada', document.getElementById('destacada').checked ? '1' : '0');
-            
+
             fetch("guardar_noticia.php", { 
                 method: "POST", 
                 body: formData 
             })
-            .then(response => response.json())
-            .then(data => {
+            .then(response => response.json())  // Convertir la respuesta a JSON
+            .then(data => {  // Manejar la respuesta en caso de éxito o error
+                console.log(data);  // Verifica los datos que recibe la respuesta
                 if (data.status === "success") {
                     alert("Noticia agregada correctamente");
                     document.getElementById('formulario').reset();
-                    document.getElementById('noticia-preview').style.display = 'none';
-                    mostrarSeccion('noticias');
+                    // Redirigir a la página de administración de noticias
+                    window.location.href = 'noticias.php'; // o la página que desees
                 } else {
+                    console.error("Error en la respuesta:", data);
                     alert("Error al agregar noticia: " + data.message);
                 }
             })
-            .catch(error => console.error("Error al enviar datos:", error));
+            .catch(error => console.error("Error al enviar datos:", error));  // Manejo de errores
         }
+
+
 
         function eliminarNoticia(id) {
             if (confirm("¿Estás seguro de que deseas eliminar esta noticia?")) {

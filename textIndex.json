@@ -5,9 +5,9 @@
         "nav-login": "Iniciar sesion",
         "header-title": "ECO BLOG",
         "header-description": "Bienvenidos a EcoBlog, un espacio dedicado a promover la energía sostenible y el acceso a fuentes limpias de energía para todos. Aquí encontrarás información sobre energías renovables, eficiencia energética y consejos para reducir tu huella energética en el día a día.",
-        "section-title-1": "¿Que es la ODS 7?",
-        "section-description-1": "La ODS 7 forma parte de los Objetivos de Desarrollo Sostenible de la ONU y busca garantizar el acceso universal a una energía asequible, fiable, sostenible y moderna. Algunos de sus principales objetivos incluyen:",
-        "section-title-2": "METAS DE LA ODS 7",
+        "section-title-1": "¿Que es el ODS 7?",
+        "section-description-1": "El ODS 7 forma parte de los Objetivos de Desarrollo Sostenible de la ONU y busca garantizar el acceso universal a una energía asequible, fiable, sostenible y moderna. Algunos de sus principales objetivos incluyen:",
+        "section-title-2": "METAS DEL ODS 7",
         "goal-1": "Garantizar el acceso universal a servicios energéticos asequibles.",
         "goal-2": "Aumentar la proporción de energías renovables en la matriz energética global.",
         "goal-3": "Duplicar la tasa de mejora de la eficiencia energética.",
@@ -24,7 +24,7 @@
         "news-2": "Aebig y Ainia firman un convenio para impulsar la producción de biogás y biometano en España",
         "news-3": "Veolia Badajoz firma un súper contrato de autoconsumo solar fotovoltaico para su fábrica TorrePet",
         "more-news-link": "Mas noticias",
-        "footer-text": "&copy; 2025 Eco Blog - Energía Sostenible"
+        "footer-text": "&copy; 2025 EcoEnergy - Energía Sostenible"
     },
     "en": {
         "page-title": "Document",
@@ -51,6 +51,6 @@
         "news-2": "Aebig and Ainia sign an agreement to boost biogas and biomethane production in Spain",
         "news-3": "Veolia Badajoz signs major solar self-consumption contract for TorrePet factory",
         "more-news-link": "More news",
-        "footer-text": "&copy; 2025 Eco Blog - Sustainable Energy"
+        "footer-text": "&copy; 2025 EcoEnergy - Sustainable Energy"
     }
 }
