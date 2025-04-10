@@ -1,13 +1,19 @@
 <?php
 require_once "ConfigsDB.php";
 
+$mysqli = getDBConnection(); // Obtener la conexión a la base de datos
+error_log("POST DATA: " . print_r($_POST, true));
+error_log("FILES DATA: " . print_r($_FILES, true));
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $titulo = $_POST["titulo"] ?? "";
-    $autor = $_POST["autor"] ?? "";
+    $autor = $_POST["autor"] ?? NULL;
     $fecha = $_POST["fecha"] ?? "";
     $contenido = $_POST["contenido"] ?? "";
+    $categoria = $_POST["categoria"] ?? "";
+    $tags = $_POST["tags"] ?? "";
 
-    if (empty($titulo) || empty($autor) || empty($fecha) || empty($contenido)) {
+    if (empty($titulo) || empty($fecha) || empty($contenido)) {
         echo json_encode(["status" => "error", "message" => "Todos los campos son obligatorios"]);
         exit;
     }
@@ -33,17 +39,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Ahora sí, incluir el campo `autor` en la consulta
-    $stmt = $mysqli->prepare("INSERT INTO noticias (titulo, autor, fecha, imagen, informacion) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $titulo, $autor, $fecha, $imagen, $contenido);
+    // Insertar noticia en la base de datos
+    $stmt = $mysqli->prepare("INSERT INTO noticias (titulo, autor, fecha, imagen, informacion, categoria, tags) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssss", $titulo, $autor, $fecha, $imagen, $contenido, $categoria, $tags);
 
     if ($stmt->execute()) {
-        echo json_encode(["status" => "success"]);
-    } else {
-        echo json_encode(["status" => "error", "message" => $stmt->error]);
+        echo json_encode(["status" => "success", "message" => "Noticia guardada correctamente"]);
+        exit;
     }
+    
+    
+    
 
     $stmt->close();
     $mysqli->close();
 }
 ?>
+
