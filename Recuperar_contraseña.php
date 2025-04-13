@@ -1,19 +1,19 @@
 <?php
-include('ConfigsDB.php');
-
-$correo = $_POST['correo'];
-$nueva_contraseña = password_hash($_POST['nueva_contraseña'], PASSWORD_DEFAULT);
-
-// Actualizar la contraseña
-$stmt = $mysqli->prepare("UPDATE usuarios SET contraseña = ? WHERE correo = ?");
-$stmt->bind_param("ss", $nueva_contraseña, $correo);
-
-if ($stmt->execute()) {
-    echo "Contraseña actualizada. <a href='iniciosesion.php'>Inicia sesión</a>";
-    
-    // Limpieza opcional: eliminar tokens anteriores
-    $mysqli->query("DELETE FROM recuperaciones WHERE correo = '$correo'");
-} else {
-    echo "Error al actualizar.";
-}
+$token = $_GET['token'] ?? '';
 ?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Restablecer contraseña</title>
+</head>
+<body>
+    <h2>Escribe tu nueva contraseña</h2>
+    <form action="actualizar_contraseña.php" method="POST">
+        <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
+        <input type="password" name="nueva_contraseña" placeholder="Nueva contraseña" required>
+        <button type="submit">Actualizar contraseña</button>
+    </form>
+</body>
+</html>
