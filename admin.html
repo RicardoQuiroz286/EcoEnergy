@@ -311,9 +311,18 @@
                 .then(response => response.json())
                 .then(data => {
                     let tabla = document.getElementById('tablaNoticias');
-                    tabla.innerHTML = '';
+                    tabla.innerHTML = '';  // Limpiar la tabla antes de agregar los nuevos datos
+
+                    if (data.length === 0) {
+                        // Si no hay noticias, muestra un mensaje
+                        tabla.innerHTML = '<tr><td colspan="6" class="text-center">No hay noticias disponibles.</td></tr>';
+                        return;  // Salir si no hay datos
+                    }
+
+                    // Crear el HTML para todas las filas de noticias
+                    let filas = '';
                     data.forEach(noticia => {
-                        tabla.innerHTML += `
+                        filas += `
                             <tr>
                                 <td>${noticia.idnoticia}</td>
                                 <td>${noticia.titulo}</td>
@@ -331,10 +340,18 @@
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </td>
-                            </tr>`;
+                            </tr>
+                        `;
                     });
+
+                    // Asignar todas las filas al innerHTML de la tabla
+                    tabla.innerHTML = filas;
                 })
-                .catch(error => console.error("Error al cargar noticias:", error));
+                .catch(error => {
+                    console.error("Error al cargar noticias:", error);
+                    // Muestra un mensaje en caso de error
+                    document.getElementById('tablaNoticias').innerHTML = '<tr><td colspan="6" class="text-center text-danger">Hubo un error al cargar las noticias.</td></tr>';
+                });
         }
 
         function agregarNoticia() {
@@ -371,6 +388,7 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data); // Verifica la respuesta del servidor
                     if (data.status === "success") {
                         alert("Noticia eliminada correctamente");
                         actualizarTabla();
@@ -410,35 +428,76 @@
             formData.append("informacion", document.getElementById("editContenido").value);
             formData.append("categoria", document.getElementById("editCategoria").value);
             formData.append("destacada", document.getElementById("editDestacada").checked ? '1' : '0');
-            
+    
             const imagenFile = document.getElementById("editImagen").files[0];
             if (imagenFile) {
                 formData.append("imagen", imagenFile);
             }
 
+            // Verifica que los datos se están agregando correctamente
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ': ' + pair[1]);
+            }
+
             fetch("editar_noticia.php", { method: "POST", body: formData })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "success") {
-                    alert("Noticia actualizada correctamente");
-                    actualizarTabla();
-                    new bootstrap.Modal(document.getElementById("modalEditar")).hide();
-                } else {
-                    alert("Error al actualizar noticia: " + data.message);
+            .then(response => response.text())  // Cambiado a text() para ver la respuesta cruda
+            .then(text => {
+                console.log("Respuesta cruda:", text);  // Muestra la respuesta cruda
+
+                try {
+                    const data = JSON.parse(text);  // Intenta parsear como JSON
+                    if (data.status === "success") {
+                        alert("Noticia actualizada correctamente");
+                        actualizarTabla();
+                        const modal = bootstrap.Modal.getInstance(document.getElementById("modalEditar"));
+                        modal.hide();
+                    } else {
+                        alert("Error al actualizar noticia: " + data.message);
+                    }
+                } catch (e) {
+                    console.error("No se pudo parsear como JSON:", e);
+                    console.error("Respuesta recibida:", text);  // Muestra lo que se recibió si no es JSON
                 }
             })
             .catch(error => console.error("Error al actualizar noticia:", error));
         }
 
         function verNoticia(id) {
-            // Aquí podrías implementar una vista previa más detallada
-            alert("Mostrando vista previa de la noticia ID: " + id);
-        }
+            fetch('obtener_noticia.php?idnoticia=' + id)
+                .then(response => response.json())
+                .then(noticia => {
+                    if (noticia && noticia.titulo) {
+                        document.getElementById('vistaTitulo').textContent = noticia.titulo;
+                        document.getElementById('vistaImagen').src = noticia.imagen;
+                        document.getElementById('vistaContenido').textContent = noticia.informacion;
+                        document.getElementById('vistaFecha').textContent = noticia.fecha;
 
-        // Mostrar dashboard por defecto al cargar
-        document.addEventListener("DOMContentLoaded", function() {
-            mostrarSeccion('dashboard');
-        });
+                        const vistaPreviaModal = new bootstrap.Modal(document.getElementById('modalVistaPrevia'));
+                        vistaPreviaModal.show();
+                    } else {
+                        alert("No se encontró la noticia con ID: " + id);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al obtener la noticia:', error);
+                });
+        }
     </script>
+    <div class="modal fade" id="modalVistaPrevia" tabindex="-1" aria-labelledby="modalVistaPreviaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalVistaPreviaLabel">Vista Previa de la Noticia</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              <h3 id="vistaTitulo"></h3>
+              <img id="vistaImagen" src="" alt="Imagen de la noticia" class="img-fluid mb-3" />
+              <p id="vistaContenido"></p>
+              <p><strong>Publicado el:</strong> <span id="vistaFecha"></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
 </body>
 </html>
