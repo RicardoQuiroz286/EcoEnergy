@@ -1,5 +1,6 @@
 <?php
 require_once "ConfigsDB.php";
+$mysqli = getDBConnection(); // AQUÍ obtienes la conexión correctamente
 
 if (isset($_GET["idnoticia"])) {
     $id = $_GET["idnoticia"];
