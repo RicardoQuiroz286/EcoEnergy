@@ -1,0 +1,6 @@
+CREATE TABLE recuperaciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    correo VARCHAR(100) NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    expira DATETIME NOT NULL
+);
