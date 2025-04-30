@@ -32,10 +32,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mkdir($uploadDir, 0777, true); // Crear la carpeta si no existe
         }
 
-        $imagen = $uploadDir . basename($_FILES["imagen"]["name"]);
+        // Codificamos el nombre del archivo para evitar problemas con espacios y caracteres especiales
+        $imagen = $uploadDir . rawurlencode(basename($_FILES["imagen"]["name"]));
+
         if (!move_uploaded_file($_FILES["imagen"]["tmp_name"], $imagen)) {
+            error_log("Error al subir la imagen a la ruta: $imagen"); // Esto ayuda a depurar
             echo json_encode(["status" => "error", "message" => "Error al subir la imagen"]);
             exit;
+        } else {
+            error_log("Imagen subida correctamente a: $imagen"); // Confirmación silenciosa
         }
     }
 
