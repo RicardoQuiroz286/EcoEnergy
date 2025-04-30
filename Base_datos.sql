@@ -59,4 +59,3 @@ CREATE TABLE `comentarios` (
     CONSTRAINT `fk_noticia_comentario` FOREIGN KEY (`idnoticia`) REFERENCES `noticias`(`idnoticia`)
         ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB COMMENT='Tabla de los comentarios';
-
