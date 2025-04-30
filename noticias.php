@@ -13,7 +13,11 @@
             <img src="images/eco_logo.png" alt="Eco Blog Logo" class="logo">
             <nav class="navbar">
                 <ul>
+<<<<<<< HEAD
                     <li><a href="index.html" id="nav-home">Inicio</a></li>
+=======
+                    <li><a href="indexsi.php" id="nav-home">Inicio</a></li>
+>>>>>>> 64eaa9dc564ab1333fdd2dcaf99584f958e23e0b
                     <li><a href="noticias.php" id="nav-news">Más Noticias</a></li>
                 </ul>
             </nav>
@@ -43,10 +47,13 @@
                     $imagen = !empty($row['imagen']) ? "uploads/" . $row['imagen'] : "images/default.jpg"; // Imagen con fallback
                     $contenido = substr($row['informacion'], 0, 150) . "..."; // Resumen del contenido
 
+<<<<<<< HEAD
                     // Codificamos la imagen para asegurarnos de que se visualiza correctamente
                     $imagen_url = rawurlencode(basename($row['imagen']));
                     $imagen_path = "uploads/" . $imagen_url;
 
+=======
+>>>>>>> 64eaa9dc564ab1333fdd2dcaf99584f958e23e0b
                     echo "
                     <div class='news-card'>
                         <img src='$imagen' alt='$titulo'>

@@ -368,7 +368,8 @@
                     alert("Noticia agregada correctamente");
                     document.getElementById('formulario').reset();
                     // Redirigir a la página de administración de noticias
-                    window.location.href = 'noticias.php'; // o la página que desees
+
+                    window.location.href = 'admin.html'; // o la página que desees
                 } else {
                     console.error("Error en la respuesta:", data);
                     alert("Error al agregar noticia: " + data.message);
@@ -471,7 +472,6 @@
                         document.getElementById('vistaImagen').src = noticia.imagen;
                         document.getElementById('vistaContenido').textContent = noticia.informacion;
                         document.getElementById('vistaFecha').textContent = noticia.fecha;
-                        
 
                         const vistaPreviaModal = new bootstrap.Modal(document.getElementById('modalVistaPrevia'));
                         vistaPreviaModal.show();

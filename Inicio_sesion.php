@@ -1,0 +1,103 @@
+<?php
+session_start();
+
+// Habilitar la visualización de errores
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// Definir el mensaje de error (si existe)
+$error_login = isset($_SESSION['error_login']) ? $_SESSION['error_login'] : '';
+unset($_SESSION['error_login']); // Borrar el error después de mostrarlo
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href="css/iniciosesion.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="forms-container">
+            <div class="signin-signup">
+                <!-- Formulario de Inicio de Sesión -->
+                <form action="iniciosesion.php" method="POST" class="sign-in-form">
+                    <h2 class="title">Inicia Sesión</h2>
+
+                    <!-- Mostrar el mensaje de error, si existe -->
+                    <?php if (!empty($error_login)): ?>
+                        <p style="color: red; text-align: center;"><?php echo $error_login; ?></p>
+                    <?php endif; ?>
+
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="email" name="correo" placeholder="Correo electrónico" required />
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="contraseña" placeholder="Contraseña" required />
+                    </div>
+                    <div class="remember-forgot">
+                        <label>
+                            <input type="checkbox" id="remember-me"> Recordar contraseña
+                        </label>
+                        <a href="#" id="forgot-password">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <input type="submit" value="Inicia Sesión" class="btn solid" />
+                </form>
+
+                <!-- Formulario de Registro con Confirmar Contraseña -->
+                <form action="registro.php" method="POST" class="sign-up-form">
+                    <h2 class="title">Regístrate</h2>
+                    <div class="input-field">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" name="correo" placeholder="Email" required />
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="contraseña" placeholder="Contraseña" required />
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="confirmar_contraseña" placeholder="Confirmar Contraseña" required />
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-venus-mars"></i>
+                        <select name="genero" required>
+                            <option value="" disabled selected>Selecciona tu género</option>
+                            <option value="H">Hombre</option>
+                            <option value="M">Mujer</option>
+                        </select>
+                    </div>
+                    <input type="submit" class="btn" value="Registrarse" />
+                </form>
+            </div>
+        </div>
+
+        <div class="panels-container">
+            <div class="panel left-panel">
+                <div class="content">
+                    <h3>¿Nuevo Aquí?</h3>
+                    <p>¡Regístrate en segundos y empieza a explorar!</p>
+                    <button class="btn transparent" id="sign-up-btn">Regístrate</button>
+                </div>
+            </div>
+            <div class="panel right-panel">
+                <div class="content">
+                    <h3>¿Ya tienes cuenta?</h3>
+                    <p>Inicia sesión y continúa explorando</p>
+                    <button class="btn transparent" id="sign-in-btn">Inicia Sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
+
+<a href="logout.php">Cerrar sesión</a>

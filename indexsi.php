@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,16 +24,24 @@
             <label for="menu"></label>
             <nav class="navbar">
                 <ul>
-
-
-                      <li><a href="noticias.html" id="nav-news">Mas noticias</a></li>
-                     <li><a href="inicio_sesion.php" id="nav-login">Iniciar sesión</a></li>
-                      <li>
-                         <select id="language-selector" onchange="changeLanguage(this.value)">
-                      <option value="es">Español</option>
-                       <option value="en">English</option>
-                          </select>
-                       </li>
+                    <li><a href="noticias.php" id="nav-news">Mas noticias</a></li>
+                    <?php
+                    // Verificar si el usuario está logueado
+                    if (isset($_SESSION['usuario'])) {
+                        // Si está logueado, mostrar "Cerrar sesión"
+                        echo '<li><a href="cerrar_sesion.php" id="nav-logout">Cerrar sesión</a></li>';
+                    } else {
+                        // Si no está logueado, mostrar "Iniciar sesión"
+                        echo '<li><a href="inicio_sesion.php" id="nav-login">Iniciar sesión</a></li>';
+                    }
+                    ?>
+                    
+                    <li>
+                        <select id="language-selector" onchange="changeLanguage(this.value)">
+                            <option value="es">Español</option>
+                            <option value="en">English</option>
+                        </select>
+                    </li>
                 </ul>
             </nav>
 
@@ -48,7 +60,9 @@
 
     </header>
 
-    <!-- Primera seccion "Presentacion" -->
+    <!-- Primeras secciones... -->
+
+    <!-- Primera sección "Presentación" -->
     <section class="coffee">
         <div class="coffe-content container">
             <h2 id="section-title-1">¿Que es el ODS 7?</h2>
@@ -58,9 +72,8 @@
         </div>
     </section>
 
-    <!-- Segunda seccion  "Metas de la ods"  -->
+    <!-- Segunda sección "Metas de la ODS" -->
     <main class="services">
-
         <div class="services-content container">
             <h2 id="section-title-2">METAS DEL ODS 7</h2>
 
@@ -83,19 +96,17 @@
                     <h3 id="goal-3">Duplicar la tasa de mejora de la eficiencia energética. </h3> 
                 </div>
             </div>
-
         </div>
-
     </main>
 
-    <!-- Tercera seccion "Inicio de noticias" -->
+    <!-- Tercera sección "Inicio de noticias" -->
     <section class="coffee">
         <div class="coffe-content container">
             <h2 id="recent-news-title">LO MAS RECIENTE</h2>
         </div>
     </section>
 
-    <!-- Tercera seccion "Noticias recientes" -->
+    <!-- Noticias recientes -->
     <section class="general">
 
         <div class="general-1">
@@ -133,7 +144,7 @@
 
     </section>
 
-    <!-- Cuarta seccion "Mas noticias" -->
+    <!-- Cuarta sección "Mas noticias" -->
     <section class="blog container">
 
         <h2 id="more-news-title">MAS NOTICIAS</h2>
