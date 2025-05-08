@@ -1,7 +1,24 @@
 <?php
+session_start(); // Inicia la sesión
+
+
+// Configuración para manejar errores correctamente y enviar JSON
+header('Content-Type: application/json'); // Establece el tipo de respuesta
+ini_set('display_errors', 0);             // No mostrar errores al navegador
+ini_set('log_errors', 1);                 // Registrar errores
+error_reporting(E_ALL);                   // Reportar todos los errores
+
 require_once "ConfigsDB.php";
 
 $mysqli = getDBConnection(); // Obtener la conexión a la base de datos
+
+// Verificar si la sesión del usuario está activa
+if (!isset($_SESSION['usuario'])) {
+    header('Content-Type: application/json');
+    echo json_encode(["status" => "error", "message" => "Sesión no iniciada"]);
+    exit;
+}
+
 error_log("POST DATA: " . print_r($_POST, true));
 error_log("FILES DATA: " . print_r($_FILES, true));
 
@@ -66,3 +83,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $stmt->close();
     $mysqli->close();
+}

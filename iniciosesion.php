@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             } else {
                 $_SESSION['error_login'] = "Contraseña incorrecta.";
-                header("Location: iniciosesion.php");
+                header("Location: inicio_sesion.php");
                 exit();
             }
         } else {
@@ -64,14 +64,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 } else {
                     $_SESSION['error_login'] = "Correo no encontrado en ninguna de las tablas.";
-                    header("Location: iniciosesion.php");
+                    header("Location: inicio_sesion.php");
                     exit();
                 }
 
                 $stmt_usuario->close();
             } else {
                 $_SESSION['error_login'] = "Error en la base de datos: " . $mysqli->error;
-                header("Location: iniciosesion.php");
+                header("Location: inicio_sesion.php");
                 exit();
             }
         }
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_admin->close();
     } else {
         $_SESSION['error_login'] = "Error en la base de datos: " . $mysqli->error;
-        header("Location: iniciosesion.php");
+        header("Location: inicio_sesion.php");
         exit();
     }
 }
