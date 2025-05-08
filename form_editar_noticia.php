@@ -16,6 +16,8 @@ if (!empty($idnoticia)) {
         $fecha = $row['fecha'];
         $contenido = $row['informacion'];
         $imagen = $row['imagen'];
+        $destacada = $row['destacada'];
+
     }
 }
 ?>
@@ -53,10 +55,11 @@ if (!empty($idnoticia)) {
         <input type="text" name="categoria" id="categoria" value="energia"><br>
 
         <label for="destacada">Destacada</label>
-        <select name="destacada">
-            <option value="0">No</option>
-            <option value="1">Sí</option>
+        <select name="destacada" id="destacada">
+            <option value="0" <?php if (isset($destacada) && $destacada == 0) echo 'selected'; ?>>No</option>
+            <option value="1" <?php if (isset($destacada) && $destacada == 1) echo 'selected'; ?>>Sí</option>
         </select><br>
+
 
         <button type="submit">Guardar cambios</button>
     </form>

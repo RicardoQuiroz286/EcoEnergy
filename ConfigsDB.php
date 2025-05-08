@@ -24,7 +24,12 @@ function getDBConnection(): mysqli {
         return $mysqli;
     } catch (mysqli_sql_exception $e) {
         error_log("Error en la conexión a MySQL: " . $e->getMessage()); // Log de error
-        exit("Error en la conexión a la base de datos. Intente más tarde."); // Mensaje genérico
+        header('Content-Type: application/json');
+        echo json_encode([
+            "status" => "error",
+            "message" => "Error en la conexión a la base de datos. Intente más tarde."
+        ]);
+        exit;
     }
 }
 
