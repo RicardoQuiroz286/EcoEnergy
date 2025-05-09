@@ -43,11 +43,6 @@
                     $imagen = !empty($row['imagen']) ? "uploads/" . $row['imagen'] : "images/default.jpg"; // Imagen con fallback
                     $contenido = substr($row['informacion'], 0, 150) . "..."; // Resumen del contenido
 
-                    // Codificamos la imagen para asegurarnos de que se visualiza correctamente
-                    $imagen_url = rawurlencode(basename($row['imagen']));
-                    $imagen_path = "uploads/" . $imagen_url;
-
-
                     echo "
                     <div class='news-card'>
                         <img src='$imagen' alt='$titulo'>
