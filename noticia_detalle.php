@@ -36,23 +36,32 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 </head>
 <body>
     <header class="header">
-        <div class="menu container">
-            <img src="images/eco_logo.png" alt="Eco Blog Logo" class="logo">
-            <nav class="navbar">
-                <ul>
-                    <li><a href="indexsi.php">Inicio</a></li>
-                    <li><a href="noticias.php">Volver a Noticias</a></li>
-                </ul>
-            </nav>
+    <div class="menu container">
+        <!-- Logo -->
+        <div class="logo">
+            <a href="indexsi.php">
+                <img src="images/eco_logo.png" alt="Eco Blog Logo" style="height: 60px;">
+            </a>
         </div>
-    </header>
+
+        <!-- Navegación -->
+        <nav class="navbar">
+            <ul>
+                <li><a href="indexsi.php">Inicio</a></li>
+                <li><a href="noticias.php">Volver a Noticias</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
 
     <section class="detalle-noticia container">
         <h1><?php echo htmlspecialchars($noticia['titulo']); ?></h1>
-        <p><strong>Autor:</strong> <?php echo htmlspecialchars($noticia['autor']); ?></p>
-        <p><strong>Fecha:</strong> <?php echo date("d/m/Y", strtotime($noticia['fecha'])); ?></p>
+
         <img src="<?php echo !empty($noticia['imagen']) ? 'uploads/' . $noticia['imagen'] : 'images/default.jpg'; ?>" alt="Imagen de la noticia">
         <p><?php echo nl2br(htmlspecialchars($noticia['informacion'])); ?></p>
+        <p><strong>Autor:</strong> <?php echo htmlspecialchars($noticia['autor']); ?></p>
+        <p><strong>Fecha:</strong> <?php echo date("d/m/Y", strtotime($noticia['fecha'])); ?></p>
     </section>
 
     <!-- Sección para que los usuarios inicien sesión y comenten -->
@@ -73,4 +82,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <?php endif; ?>
 
     <!-- Mostrar los comentarios -->
-    <section class="comentarios-list
+    <section class="comentarios-list" section>
+
+    <footer class="footer">
+        <div class="footer-content container">
+            <p id="footer-text">&copy; 2025 EcoEnergy - Energía Sostenible</p>
+        </div>
+    </footer>

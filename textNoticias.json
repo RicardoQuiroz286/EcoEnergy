@@ -2,7 +2,7 @@
     "es": {
         "page-title": "Noticias - Eco Blog",
         "nav-home": "Inicio",
-        "nav-news": "Más Noticias",
+        "nav-news": "Inicio",
         "header-title": "Últimas Noticias",
         "header-subtitle": "Mantente informado sobre las novedades en energía sostenible.",
         "news-title-1": "Qair desarrollará 61MW eólicos en Baden-Württember licitados por la agencia forestal del länder",
@@ -23,7 +23,7 @@
     "en": {
         "page-title": "News - Eco Blog",
         "nav-home": "Home",
-        "nav-news": "More News",
+        "nav-news": "Menu",
         "header-title": "Latest News",
         "header-subtitle": "Stay informed about sustainable energy news.",
         "news-title-1": "Qair will develop 61MW wind power in Baden-Württemberg auctioned by the state forestry agency",

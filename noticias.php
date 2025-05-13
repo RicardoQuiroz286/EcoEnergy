@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,21 +12,41 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
+
     <header class="header">
         <div class="menu container">
-            <img src="images/eco_logo.png" alt="Eco Blog Logo" class="logo">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="indexsi.php">
+                    <img src="images/eco_logo.png" alt="Logo EcoBlog" style="height: 60px;">
+                </a>
+            </div>
+
+            <!-- Menú de navegación -->
             <nav class="navbar">
                 <ul>
-                    <li><a href="indexsi.php" id="nav-home">Inicio</a></li>
-                    <li><a href="noticias.php" id="nav-news">Más Noticias</a></li>
+                    <li><a href="indexsi.php" id="nav-news">Inicio</a></li>
+                    <li>
+                        <?php if (isset($_SESSION['correo'])): ?>
+                            <h5><span class="user-welcome"><?php echo htmlspecialchars($_SESSION['correo']); ?></span></h5>
+                            <a href="cerrar_sesion.php" class="logout-link">Cerrar sesión</a>
+                        <?php else: ?>
+                            <span class="login-status">No has iniciado sesión</span>
+                            <a href="inicio_sesion.php" class="login-link">Iniciar sesión</a>
+                        <?php endif; ?>
+                    </li>
+                    <li>
+                        <select id="language-selector" class="language-selector" onchange="changeLanguage(this.value)">
+                            <option value="es">Español</option>
+                            <option value="en">English</option>
+                        </select>
+                    </li>
                 </ul>
             </nav>
         </div>
-        <div class="header-content container">
-            <h1 id="header-title">Últimas Noticias</h1>
-            <p id="header-subtitle">Mantente informado sobre las novedades en energía sostenible.</p>
-        </div>
     </header>
+
+
     
     <section class="news-section">
         <div class="news-container">
@@ -64,10 +88,6 @@
         <div class="footer-content container">
             <p id="footer-text">&copy; 2025 EcoEnergy - Energía Sostenible</p>
         </div>
-        <select id="language-selector">
-            <option value="es">Español</option>
-            <option value="en">English</option>
-        </select>
     </footer>
     
     <script src="translateNoticias.js"></script>

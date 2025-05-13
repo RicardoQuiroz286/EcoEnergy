@@ -16,42 +16,47 @@ session_start();
 
 <body>
 
-    <!-- Header -->
     <header class="header">
-        <div class="menu container">
-            <img src="images/eco_logo.png" alt="" class="logo">
-            <input type="checkbox" id="menu" />
-            <label for="menu"></label>
-            <nav class="navbar">
-                <ul>
-                    <li><a href="noticias.php" id="nav-news">Mas noticias</a></li>
-                    <?php
-                    if (isset($_SESSION['usuario'])) {
-                        echo '<li><a href="cerrar_sesion.php" id="nav-logout">Cerrar sesión</a></li>';
-                    } else {
-                        echo '<li><a href="inicio_sesion.php" id="nav-login">Iniciar sesión</a></li>';
-                    }
-                    ?>
-                    <li>
-                        <select id="language-selector" onchange="changeLanguage(this.value)">
-                            <option value="es">Español</option>
-                            <option value="en">English</option>
-                        </select>
-                    </li>
-                </ul>
-            </nav>
+    <div class="menu container">
+        <!-- Logo -->
+        <div class="logo">
+            <img src="images/eco_logo.png" alt="Logo EcoBlog" style="height: 60px;">
         </div>
-
-        <div class="header-content container">
-            <h1 id="header-title">ECO BLOG</h1>
-            <p id="header-description">
-                Bienvenidos a EcoBlog, un espacio dedicado a promover la energía sostenible 
-                y el acceso a fuentes limpias de energía para todos. Aquí encontrarás información 
-                sobre energías renovables, eficiencia energética y consejos para reducir tu huella 
-                energética en el día a día.
-            </p>
-        </div>
-    </header>
+        
+        <!-- Menú de navegación -->
+        <nav class="navbar">
+            <ul>
+                <li><a href="noticias.php" id="nav-news">Más noticias</a></li>
+                <li>
+                    <?php if (isset($_SESSION['correo'])): ?>
+                        <h5><span class="user-welcome"><?php echo htmlspecialchars($_SESSION['correo']); ?></span></h5>
+                        <a href="cerrar_sesion.php" class="logout-link">Cerrar sesión</a>
+                    <?php else: ?>
+                        <h5><span class="login-status">No has iniciado sesión</span></h5>
+                        <a href="inicio_sesion.php" class="login-link">Iniciar sesión</a>
+                    <?php endif; ?>
+                </li>
+                <li>
+                    <select id="language-selector" class="language-selector" onchange="changeLanguage(this.value)">
+                        <option value="es">Español</option>
+                        <option value="en">English</option>
+                    </select>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    
+    <!-- Contenido del header -->
+    <div class="header-content container">
+        <h1>ECO BLOG</h1>
+        <p>
+            Bienvenidos a EcoBlog, un espacio dedicado a promover la energía sostenible 
+            y el acceso a fuentes limpias de energía para todos. Aquí encontrarás información 
+            sobre energías renovables, eficiencia energética y consejos para reducir tu huella 
+            energética en el día a día.
+        </p>
+    </div>
+</header>
 
     <!-- Sección de información sobre ODS 7 -->
     <section class="coffee">
@@ -206,6 +211,7 @@ session_start();
         </div>
     </footer>
 
+    <script src="translateIndex.js"></script>
 </body>
 
 </html>
