@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (password_verify($contraseña, $usuario['contraseña'])) {
                 // Iniciar sesión correctamente
                 $_SESSION['usuario'] = $usuario['correo'];
+                $_SESSION['usuario_id'] = $usuario['idadministrador'];
 
                 // Redirigir a la página del administrador
                 header("Location: admin.html");
@@ -53,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (password_verify($contraseña, $usuario['contraseña'])) {
                         // Iniciar sesión correctamente
                         $_SESSION['usuario'] = $usuario['correo'];
+                        $_SESSION['usuario_id'] = $usuario['idusuario'];
 
                         // Redirigir a la página principal (usuario normal)
                         header("Location: indexsi.php");

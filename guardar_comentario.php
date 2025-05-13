@@ -17,8 +17,9 @@ $stmt = $mysqli->prepare("INSERT INTO comentarios (idusuario, idnoticia, comenta
 $stmt->bind_param("iis", $usuario_id, $idnoticia, $comentario);
 
 if ($stmt->execute()) {
-    header("Location: noticias_detalle.php?id=" . $idnoticia);
+    header("Location: noticia_detalle.php?id=" . $idnoticia);
+    exit();
 } else {
-    echo "Error al guardar el comentario.";
+    echo "Error al guardar el comentario: " . $stmt->error;
 }
 ?>
