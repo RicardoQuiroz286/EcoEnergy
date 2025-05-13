@@ -9,7 +9,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="page-title">Eco Blog</title>
-    <link rel="stylesheet" href="menu.css"> <!-- Asegúrate de que el archivo CSS está bien vinculado -->
+    <link rel="stylesheet" href="menu.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -90,18 +90,7 @@ session_start();
         </div>
     </main>
 
-   <!-- Sección de información sobre ODS 7 -->
-<section class="coffee">
-    <div class="coffe-content container">
-        <h2 id="section-title-1">¿Qué es el ODS 7?</h2>
-        <p class="txt-p" id="section-description-1">
-            La ODS 7 forma parte de los Objetivos de Desarrollo Sostenible de la ONU y busca garantizar el acceso universal a una energía asequible, fiable, sostenible y moderna. Algunos de sus principales objetivos incluyen:
-        </p>
-    </div>
-</section>
-
-
-<!-- Sección de lo más reciente -->
+    <!-- Sección de lo más reciente -->
 <section class="coffee">
     <div class="coffe-content container">
         <h2 id="recent-news-title">LO MÁS RECIENTE</h2>
@@ -109,41 +98,69 @@ session_start();
 </section>
 
 <section class="news-section">
-    <div class="news-container container-fluid px-0">
+    <div class="news-container container-fluid ">
         <?php
         require_once "ConfigsDB.php";
         $mysqli = getDBConnection();
         $result = $mysqli->query("SELECT * FROM noticias ORDER BY fecha DESC LIMIT 3");
 
         if ($result->num_rows > 0) {
+            $counter = 0; // Contador para alternar diseños
             while ($row = $result->fetch_assoc()) {
                 $idnoticia = $row['idnoticia'];
-                $titulo = $row['titulo'];
-                $autor = $row['autor'];
+                $titulo = htmlspecialchars($row['titulo']);
+                $autor = htmlspecialchars($row['autor']);
                 $fecha = date("d/m/Y", strtotime($row['fecha']));
-                $imagen = !empty($row['imagen']) ? "uploads/" . $row['imagen'] : "images/default.jpg";
-                $contenido = substr($row['informacion'], 0, 400) . "...";
+                $imagen = !empty($row['imagen']) ? "uploads/" . htmlspecialchars($row['imagen']) : "images/default.jpg";
+                $contenido = substr(htmlspecialchars($row['informacion']), 0, 400) . "...";
 
-                echo "<div class=\"row align-items-center py-4\">
-                        <div class=\"col-md-6 imagen-noticia text-center\">
-                            <img src=\"$imagen\" alt=\"Imagen de $titulo\" class=\"img-fluid\">
-                        </div>
-                        <div class=\"col-md-6 general-1\">
-                            <div class=\"contenido-flex\">
-                                <div class=\"texto-noticia\">
-                                    <h2 id=\"news-title-$idnoticia\">$titulo</h2>
-                                    <p id=\"news-description-$idnoticia\">
-                                        <strong>Autor:</strong> $autor<br>
-                                        <strong>Fecha:</strong> $fecha<br>
-                                        $contenido
-                                    </p>
-                                    <div class=\"text-center\">
-                                        <a href=\"noticia_detalle.php?id=$idnoticia\" class=\"btn-1\" id=\"news-link-$idnoticia\">Más información...</a>
+                // Alternamos el diseño basado en el contador
+                if ($counter % 2 == 0) {
+                    // Diseño con imagen a la izquierda
+                    echo "<div class=\"row align-items-center py-4\">
+                            <div class=\"col-md-6 imagen-noticia text-center\">
+                                <img src=\"$imagen\" alt=\"Imagen de $titulo\" class=\"img-fluid noticia-img\">
+                            </div>
+                            <div class=\"col-md-6 general-1\">
+                                <div class=\"contenido-flex\">
+                                    <div class=\"texto-noticia\">
+                                        <h1 id=\"news-title-$idnoticia\">$titulo</h1>
+                                        <p id=\"news-description-$idnoticia\">
+                                            <strong>Autor:</strong> $autor<br>
+                                            <strong>Fecha:</strong> $fecha<br>
+                                            $contenido
+                                        </p>
+                                        <div class=\"text-center\">
+                                            <a href=\"noticia_detalle.php?id=$idnoticia\" class=\"btn-1\" id=\"news-link-$idnoticia\">Más información...</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                      </div>";
+                          </div>";
+                } else {
+                    // Diseño con imagen a la derecha
+                    echo "<div class=\"row align-items-center py-4\">
+                            <div class=\"col-md-6 general-1\">
+                                <div class=\"contenido-flex\">
+                                    <div class=\"texto-noticia\">
+                                        <h1 id=\"news-title-$idnoticia\">$titulo</h1>
+                                        <p id=\"news-description-$idnoticia\">
+                                            <strong>Autor:</strong> $autor<br>
+                                            <strong>Fecha:</strong> $fecha<br>
+                                            $contenido
+                                        </p>
+                                        <div class=\"text-center\">
+                                            <a href=\"noticia_detalle.php?id=$idnoticia\" class=\"btn-1\" id=\"news-link-$idnoticia\">Más información...</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=\"col-md-6 imagen-noticia text-center\">
+                                <img src=\"$imagen\" alt=\"Imagen de $titulo\" class=\"img-fluid noticia-img\">
+                            </div>
+                          </div>";
+                }
+                $counter++; // Incrementamos el contador
             }
         } else {
             echo "<p class=\"text-center\">No hay noticias recientes disponibles.</p>";
@@ -152,34 +169,35 @@ session_start();
     </div>
 </section>
 
-
-
-
-
     <!-- Sección de más noticias -->
     <section class="blog container">
-        <h2 id="more-news-title">MAS NOTICIAS</h2>
-        <p id="more-news-description">¡¡Ponte al día con todas las noticias!!</p>
+    <h2 id="more-news-title">MAS NOTICIAS</h2>
+    <p id="more-news-description">¡¡Ponte al día con todas las noticias!!</p>
 
-        <div class="blog-content">
-            <div class="blog-1">
-                <a href="noticias.html"><img src="images/plansocial.jpeg" alt=""></a>
-                <a href="noticias.html"><h3 id="news-1">Comunidades energéticas ya podrán acceder...</h3></a>
-            </div>
+    <div class="blog-content">
+        <?php
+        $result = $mysqli->query("SELECT * FROM noticias ORDER BY fecha DESC LIMIT 3 OFFSET 3");
 
-            <div class="blog-1">
-                <a href="noticias.html"><img src="images/aebig.jpg" alt=""></a>
-                <a href="noticias.html"><h3 id="news-2">Aebig y Ainia firman un convenio...</h3></a>
-            </div>
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $idnoticia = $row['idnoticia'];
+                $titulo = htmlspecialchars($row['titulo']);
+                $imagen = !empty($row['imagen']) ? "uploads/" . htmlspecialchars($row['imagen']) : "images/default.jpg";
 
-            <div class="blog-1">
-                <a href="noticias.html"><img src="images/Veolia.jpeg" alt=""></a>
-                <a href="noticias.html"><h3 id="news-3">Veolia Badajoz firma un súper contrato...</h3></a>
-            </div>
-        </div>
+                echo "<div class=\"blog-1\">
+                        <a href=\"noticia_detalle.php?id=$idnoticia\"><img src=\"$imagen\" alt=\"Imagen de $titulo\"></a>
+                        <a href=\"noticia_detalle.php?id=$idnoticia\"><h3 id=\"news-$idnoticia\">$titulo</h3></a>
+                      </div>";
+            }
+        } else {
+            echo "<p class=\"text-center\">No hay más noticias disponibles.</p>";
+        }
+        ?>
+    </div>
 
-        <a href="noticias.php" class="btn-1" id="more-news-link">Más noticias</a>
-    </section>
+    <a href="noticias.php" class="btn-1" id="more-news-link">Más noticias</a>
+</section>
+
 
     <!-- Footer -->
     <footer class="footer">
@@ -187,9 +205,6 @@ session_start();
             <p id="footer-text">&copy; 2025 EcoEnergy - Energía Sostenible</p>
         </div>
     </footer>
-
-    <!-- <script src="translateIndex.js"></script> -->
-
 
 </body>
 

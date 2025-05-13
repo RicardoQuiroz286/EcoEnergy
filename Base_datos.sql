@@ -22,7 +22,6 @@ CREATE TABLE `usuarios`(
     `idusuario`         INT UNSIGNED    NOT NULL AUTO_INCREMENT COMMENT 'Id del usuario    ',
     `correo`            VARCHAR(100)    NOT NULL                COMMENT 'Correo del usuario',
     `contraseña`        VARCHAR(255)     NOT NULL                COMMENT 'Contraseña',
-    `genero`            ENUM('H', 'M')  NOT NULL                COMMENT 'Género del usuario',
         PRIMARY KEY(`idusuario`), 
             UNIQUE `_uncorreo` (`correo`),
                 CONSTRAINT `_chcontraseña` CHECK( CHAR_LENGTH(`contraseña`) >= 8 )

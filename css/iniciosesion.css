@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
 * {
     margin: 0;
     padding: 0;
@@ -127,8 +128,6 @@ form.sign-in-form {
     transition: 0.3s;
 }
 
-
-
 .btn {
     width: 100px;
     background-color: #000;
@@ -158,7 +157,7 @@ form.sign-in-form {
     grid-template-columns: repeat(2, 1fr);
 }
 
-.container::before { 
+.container::before {
     content: "";
     position: absolute;
     height: 3000px;
@@ -167,17 +166,13 @@ form.sign-in-form {
     right: 48%;
     transform: translateY(-50%);
     background: url("../images/l2.jpg") no-repeat center center/contain;
-    background-size: contain; 
+    background-size: contain;
     transition: 1.8s ease-in-out;
     border-radius: 80%;
     z-index: 6;
-    background-color: rgba(0, 0, 0, 0.5); 
-    filter: brightness(60%); 
+    background-color: rgba(0, 0, 0, 0.5);
+    filter: brightness(60%);
 }
-
-
-
-
 
 .image {
     width: 100%;
@@ -236,7 +231,6 @@ form.sign-in-form {
     transform: translateX(800px);
 }
 
-
 /* ANIMATION */
 
 .container.sign-up-mode:before {
@@ -275,7 +269,6 @@ form.sign-in-form {
 .container.sign-up-mode .right-panel {
     pointer-events: all;
 }
-
 
 /* RESPONSIVE */
 
@@ -388,3 +381,43 @@ form.sign-in-form {
         left: 50%;
     }
 }
+
+
+.input-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 30px;
+    padding: 0 15px;
+    margin: 10px 0;
+}
+
+.input-field i.bx-lock-alt,
+.input-field .toggle-password {
+    font-size: 20px;
+    color: #aaa;
+}
+
+.input-field input {
+    border: none;
+    outline: none;
+    background: transparent;
+    flex: 2;
+    padding: 15px 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Ícono del ojo a la derecha */
+.toggle-password {
+    position: absolute; 
+    right: 10px; 
+    cursor: pointer;
+    font-size: 20px; 
+    color: #aaa;
+    top: 50%; 
+    transform: translateY(-50%); 
+}
+
+

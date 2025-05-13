@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         exit();
                     }
                 } else {
-                    $_SESSION['error_login'] = "Correo no encontrado en ninguna de las tablas.";
+                    $_SESSION['error_login'] = "Correo no encontrado.";
                     header("Location: inicio_sesion.php");
                     exit();
                 }
@@ -84,3 +84,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
+

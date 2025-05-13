@@ -16,6 +16,7 @@ unset($_SESSION['error_login']); // Borrar el error después de mostrarlo
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Inicio de Sesión</title>
     <link rel="stylesheet" href="css/iniciosesion.css">
 </head>
@@ -28,53 +29,56 @@ unset($_SESSION['error_login']); // Borrar el error después de mostrarlo
                 <form action="iniciosesion.php" method="POST" class="sign-in-form">
                     <h2 class="title">Inicia Sesión</h2>
 
-                    <!-- Mostrar el mensaje de error, si existe -->
+                    <!-- Mostrar mensaje de error -->
                     <?php if (!empty($error_login)): ?>
                         <p style="color: red; text-align: center;"><?php echo $error_login; ?></p>
                     <?php endif; ?>
 
                     <div class="input-field">
-                        <i class="fas fa-user"></i>
-                        <input type="email" name="correo" placeholder="Correo electrónico" required />
+                        <i class='bx bx-user-circle'></i>
+                        <input type="email" name="correo" id="login-email" placeholder="Correo electrónico" required />
                     </div>
+
                     <div class="input-field">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" name="contraseña" placeholder="Contraseña" required />
+                      <i class='bx bx-lock-alt'></i>
+                      <input type="password" name="contraseña" id="login-password" placeholder="Contraseña" required autocomplete="on" />
+                      <i class="bx bx-show toggle-password" id="toggle-login-password"></i> 
                     </div>
+
                     <div class="remember-forgot">
                         <label>
                             <input type="checkbox" id="remember-me"> Recordar contraseña
                         </label>
-                        <a href="#" id="forgot-password">¿Olvidaste tu contraseña?</a>
+                        <a href="recuperar_contraseña.php" id="forgot-password">¿Olvidaste tu contraseña?</a>
                     </div>
+
                     <input type="submit" value="Inicia Sesión" class="btn solid" />
                 </form>
 
                 <!-- Formulario de Registro con Confirmar Contraseña -->
-                <form action="registro.php" method="POST" class="sign-up-form">
-                    <h2 class="title">Regístrate</h2>
-                    <div class="input-field">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" name="correo" placeholder="Email" required />
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" name="contraseña" placeholder="Contraseña" required />
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" name="confirmar_contraseña" placeholder="Confirmar Contraseña" required />
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-venus-mars"></i>
-                        <select name="genero" required>
-                            <option value="" disabled selected>Selecciona tu género</option>
-                            <option value="H">Hombre</option>
-                            <option value="M">Mujer</option>
-                        </select>
-                    </div>
-                    <input type="submit" class="btn" value="Registrarse" />
+                <form action="registro.php" method="POST" class="sign-up-form" onsubmit="return validateRegister(event)">
+                  <h2 class="title">Regístrate</h2>
+                                    
+                  <div class="input-field">
+                    <i class='bx bx-envelope'></i>
+                    <input type="email" name="correo" id="register-email" placeholder="Email" required />
+                  </div>
+                                    
+                  <div class="input-field">
+                    <i class='bx bx-lock-alt'></i>
+                    <input type="password" name="contraseña" id="register-password" placeholder="Contraseña" required autocomplete="off" />
+                    <i class="bx bx-show toggle-password" id="toggle-register-password"></i>
+                  </div>
+                                    
+                  <div class="input-field">
+                    <i class='bx bx-lock-alt'></i>
+                    <input type="password" name="confirmar_contraseña" id="confirm-password" placeholder="Confirmar Contraseña" required autocomplete="off" />
+                    <i class="bx bx-show toggle-password" id="toggle-confirm-password"></i>
+                  </div>
+                                    
+                  <input type="submit" class="btn" value="Registrarse" />
                 </form>
+
             </div>
         </div>
 
@@ -99,5 +103,3 @@ unset($_SESSION['error_login']); // Borrar el error después de mostrarlo
     <script src="js/app.js"></script>
 </body>
 </html>
-
-<a href="logout.php">Cerrar sesión</a>

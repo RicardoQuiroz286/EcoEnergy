@@ -1,68 +1,81 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Animación de cambio de formulario
-    const sign_in_btn = document.querySelector('#sign-in-btn');
-    const sign_up_btn = document.querySelector('#sign-up-btn');
-    const container = document.querySelector('.container');
+  const sign_in_btn = document.querySelector('#sign-in-btn');
+  const sign_up_btn = document.querySelector('#sign-up-btn');
+  const container = document.querySelector('.container');
 
-    sign_up_btn.addEventListener("click", () => {
-        container.classList.add('sign-up-mode');
+  sign_up_btn.addEventListener("click", () => {
+    container.classList.add('sign-up-mode');
+  });
+
+  sign_in_btn.addEventListener("click", () => {
+    container.classList.remove('sign-up-mode');
+  });
+
+  // Validación del formulario de inicio de sesión
+  const loginForm = document.querySelector(".sign-in-form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", function (event) {
+      const email = document.getElementById("login-email").value.trim();
+      const password = document.getElementById("login-password").value.trim();
+
+      if (email === "" || password === "") {
+        event.preventDefault();
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+
+      if (password.length < 8) {
+        event.preventDefault();
+        alert("La contraseña debe tener al menos 8 caracteres.");
+        return;
+      }
     });
+  }
 
-    sign_in_btn.addEventListener('click', () => {
-        container.classList.remove('sign-up-mode');
+  // Validación del formulario de registro
+  const registerForm = document.querySelector(".sign-up-form");
+  if (registerForm) {
+    registerForm.addEventListener("submit", function (event) {
+      const email = document.getElementById("register-email").value.trim();
+      const password = document.getElementById("register-password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
+
+      if (email === "" || password === "" || confirmPassword === "") {
+        event.preventDefault();
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+
+      if (password.length < 8) {
+        event.preventDefault();
+        alert("La contraseña debe tener al menos 8 caracteres.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        event.preventDefault();
+        alert("Las contraseñas no coinciden.");
+        return;
+      }
     });
+  }
 
-    // Validación del inicio de sesión
-    function validateLogin(event) {
-        event.preventDefault(); // Evita el envío del formulario sin validación
+  // Mostrar/Ocultar contraseñas
+  const togglePassword = (toggleId, inputId) => {
+    const toggleIcon = document.getElementById(toggleId);
+    const inputField = document.getElementById(inputId);
 
-        const password = document.getElementById("password").value;
-        const username = document.getElementById("username").value;
-
-        if (username.trim() === "" || password.trim() === "") {
-            alert("Por favor, completa todos los campos.");
-            return;
-        }
-
-        if (password.length < 8) {
-            alert("La contraseña debe tener al menos 8 caracteres.");
-            return;
-        }
-
-        alert("Inicio de sesión exitoso.");
-        document.querySelector(".sign-in-form").submit();
+    if (toggleIcon && inputField) {
+      toggleIcon.addEventListener("click", function () {
+        const isPassword = inputField.type === "password";
+        inputField.type = isPassword ? "text" : "password";
+        this.classList.toggle("bx-show", !isPassword);
+        this.classList.toggle("bx-hide", isPassword);
+      });
     }
+  };
 
-    // Validación de contraseña en registro
-    window.validateRegister = function (event) {
-        event.preventDefault(); // Evita que el formulario se envíe automáticamente
-
-        const password = document.getElementById("register-password").value;
-        const confirmPassword = document.getElementById("confirm-password").value;
-
-        if (password.length < 8) {
-            alert("La contraseña debe tener al menos 8 caracteres.");
-            return false;
-        }
-
-        if (password !== confirmPassword) {
-            alert("Las contraseñas no coinciden. Inténtalo de nuevo.");
-            return false;
-        }
-
-        alert("Registro exitoso.");
-        return true; // Envía el formulario si la validación es correcta
-    };
-
-    // Mostrar contraseña con el último carácter visible
-    const campoContraseña = document.getElementById("password");
-
-    campoContraseña.addEventListener("input", () => {
-        const valor = campoContraseña.value;
-        if (valor.length > 0) {
-            const enmascarado = "*".repeat(valor.length - 1);
-            campoContraseña.setAttribute("data-last-char", valor.charAt(valor.length - 1));
-            campoContraseña.value = enmascarado + valor.charAt(valor.length - 1);
-        }
-    });
+  togglePassword("toggle-login-password", "login-password");
+  togglePassword("toggle-register-password", "register-password");
+  togglePassword("toggle-confirm-password", "confirm-password");
 });

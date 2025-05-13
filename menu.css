@@ -165,6 +165,25 @@ body {
 }
 
 /* Services */
+.imagen-noticia img {
+    width: 100%;
+    max-width: 800px;  /* Ajusta según tu diseño */
+    height: 100%;      /* Altura fija */
+    object-fit: cover;  /* Recorta la imagen para que encaje sin deformarse */
+    border-radius: 10px;
+}
+
+.noticia-img {
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+
+
+
 .services {
     background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(images/ec2.jpg);
     background-position: center center;
@@ -223,7 +242,12 @@ body {
     width: 50%;
     padding: 100px 250px 100px 100px;
     background-color: #E1E2E6;
-}
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    
+}   
 
 .general-2,
 .general-3 {
@@ -233,21 +257,24 @@ body {
     width: 50%;
 }
 
-.general-2 {
-    background-image: url(images/Qair.jpg);
-}
 
-.general-3 {
-    background-image: url(images/Suncom.png);
-}
 
 /* Tipografía general */
 h2 {
-    font-size: 55px;
-    line-height: 60px;
+    font-size: 100px;
+    line-height: 100px;
+    color: #323337;
+   
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 70px;
+    line-height: 100px;
     color: #323337;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
     text-align: center;
 }
 
@@ -260,7 +287,7 @@ h3 {
 }
 
 p {
-    font-size: 20px;
+    font-size: 25px;
     color: #414247;
     margin: 25px 0 45px 0;
     text-align: center;
@@ -283,8 +310,8 @@ p {
     background-color: #f9f9f9;
     border-radius: 15px;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-left: -380px;
+    box-shadow: 0 4px 4000px rgba(0, 0, 0, 0.838);
+    margin-left: -300px;
 }
 
 .blog-1 img {
@@ -424,7 +451,12 @@ p {
     }
 
     .blog-content {
-        flex-direction: column;
+        
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* Esto define 3 columnas */
+        gap: 2rem;
+}
+
     }
 
     .blog-1,
@@ -440,4 +472,12 @@ p {
         flex-direction: column;
         text-align: center;
     }
-}
+
+
+
+
+
+
+
+
+
