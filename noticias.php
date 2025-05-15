@@ -18,7 +18,7 @@ session_start();
             <!-- Logo -->
             <div class="logo">
                 <a href="indexsi.php">
-                    <img src="images/eco_logo.png" alt="Logo EcoBlog" style="height: 60px;">
+                    <img src="images/Ecologo.png" alt="Logo EcoBlog" style="height: 80px;">
                 </a>
             </div>
 

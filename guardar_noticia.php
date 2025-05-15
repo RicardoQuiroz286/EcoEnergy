@@ -1,86 +1,87 @@
 <?php
-session_start(); // Inicia la sesión
-
-
-// Configuración para manejar errores correctamente y enviar JSON
-header('Content-Type: application/json'); // Establece el tipo de respuesta
-ini_set('display_errors', 0);             // No mostrar errores al navegador
-ini_set('log_errors', 1);                 // Registrar errores
-error_reporting(E_ALL);                   // Reportar todos los errores
+header('Content-Type: application/json');
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+error_reporting(E_ALL);
 
 require_once "ConfigsDB.php";
-
-$mysqli = getDBConnection(); // Obtener la conexión a la base de datos
-
-// Verificar si la sesión del usuario está activa
-if (!isset($_SESSION['usuario'])) {
-    header('Content-Type: application/json');
-    echo json_encode(["status" => "error", "message" => "Sesión no iniciada"]);
-    exit;
-}
-
-error_log("POST DATA: " . print_r($_POST, true));
-error_log("FILES DATA: " . print_r($_FILES, true));
+$mysqli = getDBConnection();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Recoger datos del formulario
     $titulo = $_POST["titulo"] ?? "";
-    $autor = $_POST["autor"] ?? NULL;
-    $fecha = $_POST["fecha"] ?? "";
+    $autor = $_POST["autor"] ?? "Anónimo";
+    $fecha = $_POST["fecha"] ?? date("Y-m-d H:i:s");
     $contenido = $_POST["contenido"] ?? "";
-    $categoria = $_POST["categoria"] ?? "";
-    $tags = $_POST["tags"] ?? "";
 
-    if (empty($titulo) || empty($fecha) || empty($contenido)) {
-        echo json_encode(["status" => "error", "message" => "Todos los campos son obligatorios"]);
+    // Validaciones básicas
+    if (empty($titulo) || empty($contenido)) {
+        echo json_encode([
+            "status" => "error", 
+            "message" => "El título y contenido son obligatorios"
+        ]);
         exit;
     }
 
-    if ($mysqli->connect_error) {
-        echo json_encode(["status" => "error", "message" => "Error en la conexión a la base de datos"]);
-        exit;
-    }
-    
+    // Manejo de imagen
     $imagen = null;
-    
     if (!empty($_FILES["imagen"]["name"])) {
         $uploadDir = "uploads/";
         if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true); // Crear la carpeta si no existe
+            mkdir($uploadDir, 0777, true);
         }
-    
-        // Verificar la extensión de la imagen
-        $ext = pathinfo($_FILES["imagen"]["name"], PATHINFO_EXTENSION);
-        $ext = strtolower($ext);
+
+        $ext = strtolower(pathinfo($_FILES["imagen"]["name"], PATHINFO_EXTENSION));
         $allowed = ["jpg", "jpeg", "png", "gif"];
-    
+
         if (!in_array($ext, $allowed)) {
-            echo json_encode(["status" => "error", "message" => "Extensión de imagen no permitida"]);
+            echo json_encode([
+                "status" => "error", 
+                "message" => "Solo se permiten imágenes JPG, PNG o GIF"
+            ]);
             exit;
         }
-    
-        // Generar nombre único para evitar sobreescritura
+
         $uniqueName = uniqid("img_", true) . "." . $ext;
         $rutaFinal = $uploadDir . $uniqueName;
-    
+
         if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $rutaFinal)) {
-            $imagen = $uniqueName; // Solo guardamos el nombre
+            $imagen = $uniqueName;
         } else {
-            echo json_encode(["status" => "error", "message" => "Error al subir la imagen"]);
+            echo json_encode([
+                "status" => "error", 
+                "message" => "Error al subir la imagen"
+            ]);
             exit;
         }
     }
-    
-    // Insertar noticia en la base de datos
-    $stmt = $mysqli->prepare("INSERT INTO noticias (titulo, autor, fecha, imagen, informacion, categoria, tags) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssss", $titulo, $autor, $fecha, $imagen, $contenido, $categoria, $tags);
+
+    // Insertar noticia
+    $stmt = $mysqli->prepare("INSERT INTO noticias (titulo, autor, fecha, imagen, informacion) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $titulo, $autor, $fecha, $imagen, $contenido);
     
     if ($stmt->execute()) {
-        echo json_encode(["status" => "success", "message" => "Noticia guardada correctamente"]);
-        exit;
+        echo json_encode([
+            "status" => "success", 
+            "message" => "Noticia publicada correctamente",
+            "data" => [
+                "titulo" => $titulo,
+                "autor" => $autor,
+                "fecha" => $fecha
+            ]
+        ]);
     } else {
-        echo json_encode(["status" => "error", "message" => "Error al guardar la noticia"]);
+        echo json_encode([
+            "status" => "error", 
+            "message" => "Error al guardar: " . $mysqli->error
+        ]);
     }
     
     $stmt->close();
     $mysqli->close();
+} else {
+    echo json_encode([
+        "status" => "error", 
+        "message" => "Método no permitido"
+    ]);
 }

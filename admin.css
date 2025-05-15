@@ -1,84 +1,188 @@
+/* Estilos Generales */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
 }
 
-.header {
-    background: #222;
+/* Sidebar Estilizado */
+.sidebar {
+    background: #2c3e50;
     color: white;
-    text-align: center;
+    width: 250px;
+    height: 100vh;
+    position: fixed;
     padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.container {
-    width: 80%;
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-input, textarea {
-    width: 100%;
+.sidebar h4 {
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.6rem;
+    margin-bottom: 30px;
     padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
     border-radius: 5px;
+    background: linear-gradient(135deg, #27ae60 0%, #219a52 100%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #28a745;
-    color: white;
+.sidebar a {
+    color: #bdc3c7;
     text-decoration: none;
-    border: none;
-    cursor: pointer;
+    padding: 12px 15px;
+    margin: 8px 0;
     border-radius: 5px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar a:hover {
+    background: #34495e;
+    color: #ecf0f1;
+    transform: translateX(5px);
+}
+
+.sidebar a i {
+    width: 25px;
     text-align: center;
 }
 
-.btn:hover {
-    background: #218838;
+/* Contenido Principal */
+.content {
+    margin-left: 250px;
+    padding: 30px;
 }
 
-.news-section {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 40px;
+h1 {
+    margin-left: 280px;
+    border-bottom: 3px solid #27ae60; 
+    font-weight: 700;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
 }
 
-.news-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+h2 {
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #27ae60;
 }
 
-.news-card {
+/* Tarjetas del Dashboard */
+.card {
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.display-4 {
+    font-weight: 700;
+}
+
+/* Formularios */
+.form-control {
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #27ae60;
+    box-shadow: none;
+}
+
+.btn-primary {
+    background: #27ae60;
+    border: none;
+    padding: 10px 25px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: #219a52;
+}
+
+/* Tabla de Noticias */
+.table {
     background: white;
-    padding: 15px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    max-width: 300px;
+    overflow: hidden;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.05);
+    width: 80%; /* Reduce el tamaño de la tabla */
+    margin-top: 30px;
+    margin-left: 300px;
+    margin-right: auto;
+}
+
+.table thead th {
+    background: #27ae60;
+    color: white;
+    font-weight: 600;
     text-align: center;
+    padding: 10px; /* Reduce el padding */
+    font-size: 14px; /* Reduce el tamaño de la fuente */
 }
 
-.news-card img {
-    width: 100%;
-    border-radius: 10px;
+.table tbody td {
+    padding: 10px; /* Reduce el padding */
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px; /* Reduce el tamaño de la fuente */
 }
 
-.news-card h3 {
-    color: #222;
-    margin: 10px 0;
+.table tbody tr:hover {
+    background-color: #f1f1f1;
 }
 
-.news-card p {
-    color: #666;
+.table .badge {
+    padding: 6px 12px;
+}
+
+/* Vista Previa */
+.noticia-preview {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    
+    .content {
+        margin-left: 0;
+    }
+    
+    .row {
+        flex-direction: column;
+    }
+
+    .table th, .table td {
+        font-size: 12px; /* Reduce aún más el tamaño de la fuente en pantallas pequeñas */
+        padding: 8px; /* Reduce el padding */
+    }
 }

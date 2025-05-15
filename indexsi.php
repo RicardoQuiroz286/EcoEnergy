@@ -20,7 +20,7 @@ session_start();
     <div class="menu container">
         <!-- Logo -->
         <div class="logo">
-            <img src="images/eco_logo.png" alt="Logo EcoBlog" style="height: 60px;">
+            <img src="images/Ecologo.png" alt="Logo EcoBlog" style="height: 100px;">
         </div>
         
         <!-- Menú de navegación -->
