@@ -1,0 +1,17 @@
+Array
+(
+    [0] => text=REPSOL+ELEVA+CASI+UN+30%25+LA+REMUNERACI%C3%93N+A+SUS+ACCIONISTAS+1.700+MILLONES+DE+EUROS+DE+BENEFICIO+NETO
+    [1] => text=Reuters.+%282025%2C+febrero+20%29.+Repsol+eleva+casi+un+30%25+la+remuneraci%C3%B3n+a+sus+accionistas.+Reuters.
+    [2] => text=08%2F04%2F2025
+    [3] => text=%28-45%25%2C+con+respecto+al+balance+2023%29%2C+pero+muchos+m%C3%A1s+dividendos+para+repartir+entre+sus+accionistas+%28%2B30%25%29+Son+las+dos+claves+del+balance+2024+que+acaba+de+presentar+Repsol.+La+petrolera+ha+declarado+concretamente+un+resultado+neto+de+1.756+millones+de+euros+en+2024%2C+lo+que+supone+un+45%25+menos+que+el+a%C3%B1o+anterior+%283.168+millones%29.+El+resultado+ajustado%2C+que+mide+espec%C3%ADficamente+el+comportamien...
+    [4] => text=EL+AGUA+CALIENTE+Y+LA+CLIMATIZACI%C3%93N+TAMBI%C3%89N+SON+RENOVABLES
+    [5] => text=Bosch+Home+Comfort.+%282025%2C+febrero+15%29.+El+agua+caliente+y+la+climatizaci%C3%B3n+tambi%C3%A9n+son+renovables.+Bosch.
+    [6] => text=07%2F04%2F2025
+    [7] => text=15+de+febrero+Bosch+Home+Comfort+apuesta+por+la+energ%C3%ADa+solar+t%C3%A9rmica+Una+tecnolog%C3%ADa+presente+en+muchos+edificios+motivados+por+las+ordenanzas+municipales+y+C%C3%B3digo+T%C3%A9cnico+de+la+Edificaci%C3%B3n+que+llenaron+los+tejados+de+los+nuevos+edificios+para+conseguir+agua+caliente+y+apoyo+a+calefacci%C3%B3n+y+climatizaci%C3%B3n+de+piscinas+con+energ%C3%ADa+solar%2C+con+un+amplio+cat%C3%A1logo+de+soluciones+tanto+para+el+%C3%A1...
+    [8] => text=ENERG%C3%8DAS+RENOVABLES.+%282025%2C+20+DE+FEBRERO%29.+ACWA+POWER+DESARROLLAR%C3%81+EL+MAYOR+PARQUE+E%C3%93LICO+DE+EGIPTO.
+    [9] => text=D%C3%ADas%2C+C.+%282024%2C+15+de+octubre%29.+Grenergy+busca+en+el+desierto+de+Chile+un+oasis+de+beneficios.+El+Pa%C3%ADs.
+    [10] => text=06%2F04%2F2025
+    [11] => text=Green+must+go+on+es+la+idea+que+encapsula+la+nueva+identidad+de+marca+de+Grenergy%2C+compa%C3%B1%C3%ADa+espa%C3%B1ola+que%2C+tras+18+a%C3%B1os+de+actividad+en+el+sector+fotovoltaico%2C+se+considera+%22ahora+lista+para+ir+m%C3%A1s+all%C3%A1+y+desempe%C3%B1ar+un+papel+fundamental+en+la+transformaci%C3%B3n+del+sector%22%2C+papel+que+pasa+por+el+%22almacenamiento+energ%C3%A9tico%22.+El+nuevo+lema+de+la+empresa+es+On+and+On%2C+con+el+q...
+    [12] => target_lang=EN
+    [13] => auth_key=d3d0044d-8d86-4fa9-9d96-b901938bc738%3Afx
+)
