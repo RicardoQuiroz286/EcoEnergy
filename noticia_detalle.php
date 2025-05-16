@@ -1,5 +1,18 @@
 <?php
-session_start(); // Inicia la sesión
+session_start(); // Asegura que la sesión esté iniciada
+
+// Verifica si el usuario está logueado
+if (!isset($_SESSION['usuario_id'])) {
+    header("Location: inicio_sesion.php");  // Redirige al inicio de sesión
+    exit;  // Detiene la ejecución después de la redirección
+}
+
+// Debug para verificar si la sesión está activa y el usuario está logueado
+// echo '<pre>';
+// print_r($_SESSION);
+// echo '</pre>';
+?>
+
 
 require_once "ConfigsDB.php";
 $mysqli = getDBConnection();
@@ -42,69 +55,80 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             </div>
             <nav class="navbar">
                 <ul>
-                    <li><a href="indexsi.php">Inicio</a></li>
-                    <li><a href="noticias.php">Volver a Noticias</a></li>
+                    <li><a href="indexsi.php" id="nav-home" class="translatable" data-translate-id="nav-home">Inicio</a></li>
+                    <li><a href="noticias.php" id="nav-backnews" class="translatable" data-translate-id="nav-backnews">Volver a Noticias</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-
-    <section class="contenido-detalle">
-    <div class="detalle-noticia">
-        <h1><?php echo htmlspecialchars($noticia['titulo']); ?></h1>
-        <img src="<?php echo !empty($noticia['imagen']) ? 'uploads/' . htmlspecialchars($noticia['imagen']) : 'images/default.jpg'; ?>" alt="Imagen de la noticia">
-        <p><?php echo nl2br(htmlspecialchars($noticia['informacion'])); ?></p>
-        <p><strong>Autor:</strong> <?php echo htmlspecialchars($noticia['autor']); ?></p>
-        <p><strong>Fecha:</strong> <?php echo date("d/m/Y", strtotime($noticia['fecha'])); ?></p>
-    </div>
-
-    <div class="comentarios-contenedor">
-        <?php if (isset($_SESSION['usuario_id'])): ?>
-            <h2>Deja un comentario</h2>
-            <form action="guardar_comentario.php" method="post">
-                <input type="hidden" name="idnoticia" value="<?php echo $idnoticia; ?>">
-                <p><strong>Hola <?php echo htmlspecialchars($_SESSION['correo']); ?>,</strong> tu opinión nos sería de mucha ayuda:</p>
-                <textarea name="comentario" placeholder="Escribe tu comentario aquí..." required></textarea>
-                <button type="submit">Publicar comentario</button>
-            </form>
-        <?php else: ?>
-            <p><a href="inicio_sesion.php">Inicia sesión</a> para dejar un comentario.</p>
-        <?php endif; ?>
-
-        <div class="comentarios-list">
-            <h2>Comentarios</h2>
-            <?php
-            $stmt = $mysqli->prepare("SELECT c.comentario, c.fecha, u.correo FROM comentarios c
-                                      JOIN usuarios u ON c.idusuario = u.idusuario
-                                      WHERE c.idnoticia = ?
-                                      ORDER BY c.fecha DESC");
-            $stmt->bind_param("i", $idnoticia);
-            $stmt->execute();
-            $resultado = $stmt->get_result();
-
-            if ($resultado->num_rows > 0) {
-                while ($row = $resultado->fetch_assoc()) {
-                    echo "<div class='comentario'>";
-                    echo "<p><strong>" . htmlspecialchars($row['correo']) . "</strong> comentó el " . date("d/m/Y H:i", strtotime($row['fecha'])) . ":</p>";
-                    echo "<p>" . nl2br(htmlspecialchars($row['comentario'])) . "</p>";
-                    echo "</div>";
-                }
-            } else {
-                echo "<p>No hay comentarios aún. ¡Sé el primero en comentar!</p>";
-            }
-
-            $stmt->close();
-            ?>
-        </div>
-    </div>
+   <section class="detalle-noticia container">
+    <h1 class="dynamic-deepl"><?php echo htmlspecialchars($noticia['titulo']); ?></h1>
+    <p><strong class="translatable" data-translate-id="author-label">Autor:</strong> 
+        <span class="dynamic-deepl"><?php echo htmlspecialchars($noticia['autor']); ?></span>
+    </p>
+    <p><strong class="translatable" data-translate-id="date-label">Fecha:</strong> 
+        <span class="dynamic-deepl"><?php echo date("d/m/Y", strtotime($noticia['fecha'])); ?></span>
+    </p>
+    <img src="<?php echo !empty($noticia['imagen']) ? 'uploads/' . htmlspecialchars($noticia['imagen']) : 'images/default.jpg'; ?>" alt="Imagen de la noticia">
+    <p class="dynamic-deepl"><?php echo nl2br(htmlspecialchars($noticia['informacion'])); ?></p>
 </section>
 
+<?php if (isset($_SESSION['usuario_id'])): ?>
+    <section class="comentarios container">
+        <h2 class="translatable" data-translate-id="leave-comment">Deja un comentario</h2>
+        <form action="guardar_comentario.php" method="post">
+            <input type="hidden" name="idnoticia" value="<?php echo $idnoticia; ?>">
+            <?php if (isset($_SESSION['usuario'])): ?>
+                <p class="dynamic-deepl">
+                    <strong>Hola <?php echo htmlspecialchars($_SESSION['usuario']); ?>,</strong> 
+                    <span class="translatable" data-translate-id="comment-invite">tu opinión nos sería de mucha ayuda:</span>
+                </p>
+            <?php endif; ?>
+            <textarea name="comentario" placeholder="Escribe tu comentario aquí..."></textarea>
+            <br>
+            <button type="submit" class="translatable" data-translate-id="post-comment">Publica un comentario</button>
+        </form>
+    </section>
+<?php else: ?>
+    <section class="comentarios container">
+        <p>
+            <a href="inicio_sesion.php" class="translatable" data-translate-id="login-to-comment">Inicia sesión</a> 
+            <span class="translatable" data-translate-id="to-leave-comment">para dejar un comentario.</span>
+        </p>
+    </section>
+<?php endif; ?>
 
-    
+<section class="comentarios-list container">
+    <h2 class="translatable" data-translate-id="comments">Comentarios</h2>
+    <?php
+    $stmt = $mysqli->prepare("SELECT c.comentario, c.fecha, u.correo FROM comentarios c
+                              JOIN usuarios u ON c.idusuario = u.idusuario
+                              WHERE c.idnoticia = ?
+                              ORDER BY c.fecha DESC");
+    $stmt->bind_param("i", $idnoticia);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    if ($resultado->num_rows > 0) {
+        while ($row = $resultado->fetch_assoc()) {
+            echo "<div class='comentario'>";
+            echo "<p><strong class='dynamic-deepl'>" . htmlspecialchars($row['correo']) . "</strong> <span class='translatable' data-translate-id='date-label'>comentó el</span> " . date("d/m/Y H:i", strtotime($row['fecha'])) . ":</p>";
+            echo "<p>" . nl2br(htmlspecialchars($row['comentario'])) . "</p>";
+            echo "<hr>";
+            echo "</div>";
+        }
+    } else {
+        echo "<p class='translatable' data-translate-id='no-comments'>No hay comentarios aún. ¡Sé el primero en comentar!</p>";
+    }
+
+    $stmt->close();
+    ?>
+</section>
     <footer class="footer">
         <div class="footer-content container">
             <p id="footer-text">&copy; 2025 EcoEnergy - Energía Sostenible</p>
         </div>
     </footer>
+<script src="diccionariolocal.js"></script>
 </body>
 </html>

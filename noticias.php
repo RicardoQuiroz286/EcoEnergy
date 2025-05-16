@@ -25,24 +25,23 @@ session_start();
             <!-- Menú de navegación -->
             <nav class="navbar">
                 <ul>
-                    <li><a href="indexsi.php" id="nav-news">Inicio</a></li>
+                    <li><a href="indexsi.php" id="nav-home" class="translatable" data-translate-id="nav-home">Inicio</a></li>
+                    <li><a href="noticias.php" id="nav-news" class="translatable" data-translate-id="nav-news">Más Noticias</a></li>
                     <li>
                         <?php if (isset($_SESSION['correo'])): ?>
                             <h5><span class="user-welcome"><?php echo htmlspecialchars($_SESSION['correo']); ?></span></h5>
-                            <a href="cerrar_sesion.php" class="logout-link">Cerrar sesión</a>
+                            <a href="cerrar_sesion.php" class="logout-link translatable" data-translate-id="logout">Cerrar sesión</a>
                         <?php else: ?>
-                            <span class="login-status">No has iniciado sesión</span>
-                            <a href="inicio_sesion.php" class="login-link">Iniciar sesión</a>
+                            <span class="login-status translatable" data-translate-id="not-logged-in">No has iniciado sesión</span>
+                            <a href="inicio_sesion.php" class="login-link translatable" data-translate-id="login">Iniciar sesión</a>
                         <?php endif; ?>
-                    </li>
-                    <li>
-                        <select id="language-selector" class="language-selector" onchange="changeLanguage(this.value)">
-                            <option value="es">Español</option>
-                            <option value="en">English</option>
-                        </select>
                     </li>
                 </ul>
             </nav>
+        </div>
+        <div class="header-content container">
+            <h1 id="header-title" class="translatable" data-translate-id="header-title">Últimas Noticias</h1>
+            <p id="header-subtitle" class="translatable" data-translate-id="header-subtitle">Manténgase informado de las últimas noticias sobre energía sostenible</p>
         </div>
     </header>
 
@@ -70,11 +69,11 @@ session_start();
                     echo "
                     <div class='news-card'>
                         <img src='$imagen' alt='$titulo'>
-                        <h3>$titulo</h3>
-                        <p><strong>Autor:</strong> $autor</p>
-                        <p><strong>Fecha:</strong> $fecha</p>
-                        <p>$contenido</p>
-                        <a href='noticia_detalle.php?id=$idnoticia' class='btn'>Leer más</a>
+                        <h3 class='dynamic-deepl'>$titulo</h3>
+                        <p><strong class='translatable' data-translate-id='author-label'>Autor:</strong> <span class='dynamic-deepl'>$autor</span></p>
+                        <p><strong class='translatable' data-translate-id='date-label'>Fecha:</strong> $fecha</p>
+                        <p class='dynamic-deepl'>$contenido</p>
+                        <a href='noticia_detalle.php?id=$idnoticia' class='btn dynamic-deepl'>Leer más</a>
                     </div>";
                 }
             } else {
@@ -90,7 +89,7 @@ session_start();
         </div>
     </footer>
     
-    <script src="translateNoticias.js"></script>
+<script src="diccionariolocal.js"></script>
 </body>
 </html>
 
