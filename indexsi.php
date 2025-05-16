@@ -16,42 +16,60 @@ session_start();
 
 <body>
 
-    <!-- Header -->
     <header class="header">
         <div class="menu container">
-            <img src="images/eco_logo.png" alt="" class="logo">
-            <input type="checkbox" id="menu" />
-            <label for="menu"></label>
-            <nav class="navbar">
-                <ul>
-                    <li><a href="noticias.php" id="nav-news" class="translatable" data-translate-id="nav-news">Mas noticias</a></li>
-                    <?php
-                    if (isset($_SESSION['usuario'])) {
-                        echo '<li><a href="cerrar_sesion.php" id="nav-logout" class="translatable" data-translate-id="nav-logout">Cerrar sesión</a></li>';
-                    } else {
-                        echo '<li><a href="inicio_sesion.php" id="nav-login"  class="translatable" data-translate-id="nav-login">Iniciar sesión</a></li>';
-                    }
-                    ?>
-                    <li>
-                        <select id="language-selector">
-                            <option value="es">Español</option>
-                            <option value="en">English</option>
-                        </select>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+    <!-- Logo -->
+    <img src="images/eco_logo.png" alt="Logo EcoBlog" class="logo" style="height: 100px;">
 
-        <div class="header-content container">
-            <h1 id="header-title" class = "translatable">ECO BLOG</h1>
-            <p id="header-description" class="translatable" data-translate-id="header-description">
-                Bienvenidos a EcoBlog, un espacio dedicado a promover la energía sostenible 
-                y el acceso a fuentes limpias de energía para todos. Aquí encontrarás información 
-                sobre energías renovables, eficiencia energética y consejos para reducir tu huella 
-                energética en el día a día.
-            </p>
-        </div>
-    </header>
+    <!-- Menú de navegación -->
+    <nav class="navbar">
+        <ul>
+            <li>
+                <a href="noticias.php" id="nav-news" class="translatable" data-translate-id="nav-news">Más noticias</a>
+            </li>
+            <li>
+                <?php if (isset($_SESSION['usuario']) || isset($_SESSION['correo'])): ?>
+                    <h5>
+                        <span class="user-welcome">
+                            <?php 
+                                echo isset($_SESSION['correo']) 
+                                    ? htmlspecialchars($_SESSION['correo']) 
+                                    : htmlspecialchars($_SESSION['usuario']); 
+                            ?>
+                        </span>
+                    </h5>
+                    <a href="cerrar_sesion.php" id="nav-logout" class="translatable" data-translate-id="nav-logout">Cerrar sesión</a>
+                <?php else: ?>
+                    <h5>
+                        <span class="login-status translatable" data-translate-id="login-status">
+                            No has iniciado sesión
+                        </span>
+                    </h5>
+                    <a href="inicio_sesion.php" id="nav-login" class="translatable" data-translate-id="nav-login">Iniciar sesión</a>
+                <?php endif; ?>
+            </li>
+            <li>
+                <select id="language-selector">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                </select>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Contenido del header -->
+<div class="header-content container">
+    <h1 id="header-title" class="translatable" data-translate-id="header-title">ECO BLOG</h1>
+    <p id="header-description" class="translatable" data-translate-id="header-description">
+        Bienvenidos a EcoBlog, un espacio dedicado a promover la energía sostenible 
+        y el acceso a fuentes limpias de energía para todos. Aquí encontrarás información 
+        sobre energías renovables, eficiencia energética y consejos para reducir tu huella 
+        energética en el día a día.
+    </p>
+</div>
+</header>
+
 
     <!-- Sección de información sobre ODS 7 -->
     <section class="coffee">
@@ -203,7 +221,6 @@ session_start();
             <p id="footer-text">&copy; 2025 EcoEnergy - Energía Sostenible</p>
         </div>
     </footer>
-
 <script src="diccionariolocal.js"></script>
 </body>
 </html>

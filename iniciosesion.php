@@ -1,90 +1,62 @@
 <?php
 session_start();
-include('ConfigsDB.php');
-$mysqli = getDBConnection();
+require_once "ConfigsDB.php";
 
-// Validar que se haya enviado el formulario correctamente
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Limpiar entradas
-    $correo = trim($_POST['correo']);
-    $contraseña = trim($_POST['contraseña']);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $correo = $_POST['correo'];
+    $contrasena = $_POST['contraseña'];
 
-    // Preparar consulta para buscar al usuario en la tabla 'administrador'
-    $query_admin = "SELECT * FROM administrador WHERE correo = ?";
-    $stmt_admin = $mysqli->prepare($query_admin);
+    $conn = getDBConnection();
 
-    if ($stmt_admin) {
-        $stmt_admin->bind_param("s", $correo);
-        $stmt_admin->execute();
-        $resultado_admin = $stmt_admin->get_result();
+    // Verificar si es administrador
+    $sql_admin = "SELECT idadministrador, correo, contraseña FROM administrador WHERE correo = ?";
+    $stmt_admin = $conn->prepare($sql_admin);
+    $stmt_admin->bind_param("s", $correo);
+    $stmt_admin->execute();
+    $res_admin = $stmt_admin->get_result();
 
-        // Verificar si el correo existe en la tabla administrador
-        if ($resultado_admin->num_rows === 1) {
-            $usuario = $resultado_admin->fetch_assoc();
-
-            // Verificar contraseña hasheada
-            if (password_verify($contraseña, $usuario['contraseña'])) {
-                // Iniciar sesión correctamente
-                $_SESSION['usuario'] = $usuario['correo'];
-                $_SESSION['usuario_id'] = $usuario['idadministrador'];
-
-                // Redirigir a la página del administrador
-                header("Location: admin.html");
-                exit();
-            } else {
-                $_SESSION['error_login'] = "Contraseña incorrecta.";
-                header("Location: inicio_sesion.php");
-                exit();
-            }
+    if ($res_admin->num_rows == 1) {
+        $admin = $res_admin->fetch_assoc();
+        if (password_verify($contrasena, $admin['contraseña'])) {
+            $_SESSION['admin_id'] = $admin['idadministrador'];
+            $_SESSION['correo'] = $admin['correo'];
+            header("Location: admin.php"); // Página de administrador
+            exit();
         } else {
-            // Si no encuentra el correo en la tabla administrador, buscar en la tabla usuarios
-            $query_usuario = "SELECT * FROM usuarios WHERE correo = ?";
-            $stmt_usuario = $mysqli->prepare($query_usuario);
-
-            if ($stmt_usuario) {
-                $stmt_usuario->bind_param("s", $correo);
-                $stmt_usuario->execute();
-                $resultado_usuario = $stmt_usuario->get_result();
-
-                // Verificar si el correo existe en la tabla usuarios
-                if ($resultado_usuario->num_rows === 1) {
-                    $usuario = $resultado_usuario->fetch_assoc();
-
-                    // Verificar contraseña hasheada
-                    if (password_verify($contraseña, $usuario['contraseña'])) {
-                        // Iniciar sesión correctamente
-                        $_SESSION['usuario'] = $usuario['correo'];
-                        $_SESSION['usuario_id'] = $usuario['idusuario'];
-
-                        // Redirigir a la página principal (usuario normal)
-                        header("Location: indexsi.php");
-                        exit();
-                    } else {
-                        $_SESSION['error_login'] = "Contraseña incorrecta.";
-                        header("Location: inicio_sesion.php");
-                        exit();
-                    }
-                } else {
-                    $_SESSION['error_login'] = "Correo no encontrado.";
-                    header("Location: inicio_sesion.php");
-                    exit();
-                }
-
-                $stmt_usuario->close();
-            } else {
-                $_SESSION['error_login'] = "Error en la base de datos: " . $mysqli->error;
-                header("Location: inicio_sesion.php");
-                exit();
-            }
+            $_SESSION['error_login'] = "Contraseña incorrecta.";
+            header("Location: inicio_sesion.php");
+            exit();
         }
+    }
 
-        $stmt_admin->close();
+    // Si no es administrador, verificar si es usuario
+    $sql_usuario = "SELECT idusuario, correo, contraseña FROM usuarios WHERE correo = ?";
+    $stmt_user = $conn->prepare($sql_usuario);
+    $stmt_user->bind_param("s", $correo);
+    $stmt_user->execute();
+    $res_user = $stmt_user->get_result();
+
+    if ($res_user->num_rows == 1) {
+        $usuario = $res_user->fetch_assoc();
+        if (password_verify($contrasena, $usuario['contraseña'])) {
+            $_SESSION['usuario_id'] = $usuario['idusuario'];
+            $_SESSION['correo'] = $usuario['correo'];
+            header("Location: indexsi.php"); // Página de usuario
+            exit();
+        } else {
+            $_SESSION['error_login'] = "Contraseña incorrecta.";
+            header("Location: inicio_sesion.php");
+            exit();
+        }
     } else {
-        $_SESSION['error_login'] = "Error en la base de datos: " . $mysqli->error;
+        $_SESSION['error_login'] = "Correo no registrado.";
         header("Location: inicio_sesion.php");
         exit();
     }
+
+    // Cerrar conexiones
+    $stmt_admin->close();
+    $stmt_user->close();
+    $conn->close();
 }
 ?>
-
-

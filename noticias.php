@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,13 +12,30 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
+
     <header class="header">
         <div class="menu container">
-            <img src="images/eco_logo.png" alt="Eco Blog Logo" class="logo">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="indexsi.php">
+                    <img src="images/Ecologo.png" alt="Logo EcoBlog" style="height: 80px;">
+                </a>
+            </div>
+
+            <!-- Menú de navegación -->
             <nav class="navbar">
                 <ul>
                     <li><a href="indexsi.php" id="nav-home" class="translatable" data-translate-id="nav-home">Inicio</a></li>
                     <li><a href="noticias.php" id="nav-news" class="translatable" data-translate-id="nav-news">Más Noticias</a></li>
+                    <li>
+                        <?php if (isset($_SESSION['correo'])): ?>
+                            <h5><span class="user-welcome"><?php echo htmlspecialchars($_SESSION['correo']); ?></span></h5>
+                            <a href="cerrar_sesion.php" class="logout-link translatable" data-translate-id="logout">Cerrar sesión</a>
+                        <?php else: ?>
+                            <span class="login-status translatable" data-translate-id="not-logged-in">No has iniciado sesión</span>
+                            <a href="inicio_sesion.php" class="login-link translatable" data-translate-id="login">Iniciar sesión</a>
+                        <?php endif; ?>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -23,6 +44,8 @@
             <p id="header-subtitle" class="translatable" data-translate-id="header-subtitle">Manténgase informado de las últimas noticias sobre energía sostenible</p>
         </div>
     </header>
+
+
     
     <section class="news-section">
         <div class="news-container">

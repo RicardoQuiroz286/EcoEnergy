@@ -13,8 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $autor = $_POST["autor"] ?? '';
     $fecha = $_POST["fecha"] ?? '';
     $contenido = $_POST["informacion"] ?? '';
-    $categoria = $_POST["categoria"] ?? 'energia';
-    $destacada = $_POST["destacada"] ?? '0';
 
     if (empty($idnoticia) || empty($titulo) || empty($autor) || empty($fecha) || empty($contenido)) {
         echo json_encode(["status" => "error", "message" => "Todos los campos son obligatorios."]);
@@ -40,8 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Actualizar noticia
-    $stmt = $mysqli->prepare("UPDATE noticias SET titulo = ?, autor = ?, fecha = ?, imagen = ?, informacion = ?, categoria = ?, destacada = ? WHERE idnoticia = ?");
-    $stmt->bind_param("sssssssi", $titulo, $autor, $fecha, $imagen, $contenido, $categoria, $destacada, $idnoticia);
+    $stmt = $mysqli->prepare("UPDATE noticias SET titulo = ?, autor = ?, fecha = ?, imagen = ?, informacion = ? WHERE idnoticia = ?");
+    $stmt->bind_param("sssssi", $titulo, $autor, $fecha, $imagen, $contenido, $idnoticia);
 
     if ($stmt->execute()) {
         echo json_encode(["status" => "success", "message" => "Noticia actualizada exitosamente"]);
@@ -50,4 +48,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     exit;
 }
-

@@ -8,16 +8,16 @@ if (!isset($_SESSION['usuario_id'])) {
 }
 
 // Debug para verificar si la sesión está activa y el usuario está logueado
-//echo '<pre>';
-//print_r($_SESSION);
-//echo '</pre>';
+// echo '<pre>';
+// print_r($_SESSION);
+// echo '</pre>';
+?>
+
 
 require_once "ConfigsDB.php";
 $mysqli = getDBConnection();
 
-// DEBUG opcional para verificar si la sesión está activa:
-// echo '<pre>'; print_r($_SESSION); echo '</pre>';
-
+// Verificar si se ha proporcionado un ID válido
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $idnoticia = $_GET['id'];
 
@@ -48,7 +48,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 <body>
     <header class="header">
         <div class="menu container">
-            <img src="images/eco_logo.png" alt="Eco Blog Logo" class="logo">
+            <div class="logo">
+                <a href="indexsi.php">
+                    <img src="images/Ecologo.png" alt="Logo EcoBlog" style="height: 100px;">
+                </a>
+            </div>
             <nav class="navbar">
                 <ul>
                     <li><a href="indexsi.php" id="nav-home" class="translatable" data-translate-id="nav-home">Inicio</a></li>
@@ -57,71 +61,74 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             </nav>
         </div>
     </header>
+   <section class="detalle-noticia container">
+    <h1 class="dynamic-deepl"><?php echo htmlspecialchars($noticia['titulo']); ?></h1>
+    <p><strong class="translatable" data-translate-id="author-label">Autor:</strong> 
+        <span class="dynamic-deepl"><?php echo htmlspecialchars($noticia['autor']); ?></span>
+    </p>
+    <p><strong class="translatable" data-translate-id="date-label">Fecha:</strong> 
+        <span class="dynamic-deepl"><?php echo date("d/m/Y", strtotime($noticia['fecha'])); ?></span>
+    </p>
+    <img src="<?php echo !empty($noticia['imagen']) ? 'uploads/' . htmlspecialchars($noticia['imagen']) : 'images/default.jpg'; ?>" alt="Imagen de la noticia">
+    <p class="dynamic-deepl"><?php echo nl2br(htmlspecialchars($noticia['informacion'])); ?></p>
+</section>
 
-    <section class="detalle-noticia container">
-        <h1 class="dynamic-deepl"><?php echo htmlspecialchars($noticia['titulo']); ?></h1>
-         <!-- Autor y fecha, pueden ir con traducción fija de etiquetas -->
-         <p><strong class="translatable" data-translate-id="author-label">Autor:</strong> 
-           <span class="dynamic-deepl"><?php echo htmlspecialchars($noticia['autor']); ?></span></p>
-
-        <p><strong class="translatable" data-translate-id="date-label">Fecha:</strong> 
-           <span class="dynamic-deepl"><?php echo date("d/m/Y", strtotime($noticia['fecha'])); ?></span></p>
-        <img src="<?php echo !empty($noticia['imagen']) ? 'uploads/' . $noticia['imagen'] : 'images/default.jpg'; ?>" alt="Imagen de la noticia">
-        <!-- Información de la noticia dinámica traducible -->
-        <p class="dynamic-deepl"><?php echo nl2br(htmlspecialchars($noticia['informacion'])); ?></p>
-    </section>
-
-    <!-- Sección para que los usuarios inicien sesión y comenten -->
-    <?php if (isset($_SESSION['usuario_id'])): ?>
-        <section class="comentarios container">
+<?php if (isset($_SESSION['usuario_id'])): ?>
+    <section class="comentarios container">
         <h2 class="translatable" data-translate-id="leave-comment">Deja un comentario</h2>
-            <form action="guardar_comentario.php" method="post">
-                <input type="hidden" name="idnoticia" value="<?php echo $idnoticia; ?>">
-                <?php if (isset($_SESSION['usuario'])): ?>
-                    <p class="dynamic-deepl"><strong>Hola <?php echo $_SESSION['usuario']; ?>,</strong> deja tu comentario:</p>
-                <?php endif; ?>
-                <textarea name ="comentario" placeholder="Escribe tu comentario aquí..."></textarea>
-                <br>
-                <button type="submit" class="translatable" data-translate-id="post-comment">Publica un comentario</button>
-            </form>
-        </section>
-    <?php else: ?>
-        <section class="comentarios container">
-        <p><a href="inicio_sesion.php" class="translatable" data-translate-id="Inic">Inicia sesión</a> para dejar un comentario.</p>
-        </section>
-    <?php endif; ?>
-
-    <!-- Mostrar los comentarios -->
-    <section class="comentarios-list container">
-        <h2 class="translatable" data-translate-id="comments">Comentarios</h2>
-        <?php
-        $stmt = $mysqli->prepare("SELECT c.comentario, c.fecha, u.correo FROM comentarios c
-                                  JOIN usuarios u ON c.idusuario = u.idusuario
-                                  WHERE c.idnoticia = ?
-                                  ORDER BY c.fecha DESC");
-        $stmt->bind_param("i", $idnoticia);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
-
-        if ($resultado->num_rows > 0) {
-            while ($row = $resultado->fetch_assoc()) {
-                echo "<div class='comentario'>";
-                echo "<p><strong class='dynamic-deepl'>" . htmlspecialchars($row['correo']) . "</strong> <span class='translatable' data-translate-id='date-label'>comentó el</span> " . date("d/m/Y H:i", strtotime($row['fecha'])) . ":</p>";
-                echo "<p>" . nl2br(htmlspecialchars($row['comentario'])) . "</p>";
-                echo "<hr>";
-                echo "</div>";
-            }
-        } else {
-            echo "<p class='translatable' data-translate-id='no-comments'>No hay comentarios aún. ¡Sé el primero en comentar!</p>";
-        }
-
-
-
-        $stmt->close();
-        ?>
+        <form action="guardar_comentario.php" method="post">
+            <input type="hidden" name="idnoticia" value="<?php echo $idnoticia; ?>">
+            <?php if (isset($_SESSION['usuario'])): ?>
+                <p class="dynamic-deepl">
+                    <strong>Hola <?php echo htmlspecialchars($_SESSION['usuario']); ?>,</strong> 
+                    <span class="translatable" data-translate-id="comment-invite">tu opinión nos sería de mucha ayuda:</span>
+                </p>
+            <?php endif; ?>
+            <textarea name="comentario" placeholder="Escribe tu comentario aquí..."></textarea>
+            <br>
+            <button type="submit" class="translatable" data-translate-id="post-comment">Publica un comentario</button>
+        </form>
     </section>
-     <!-- Aquí cargas tu script del diccionario y traducción -->
-     <script src="diccionariolocal.js"></script>
+<?php else: ?>
+    <section class="comentarios container">
+        <p>
+            <a href="inicio_sesion.php" class="translatable" data-translate-id="login-to-comment">Inicia sesión</a> 
+            <span class="translatable" data-translate-id="to-leave-comment">para dejar un comentario.</span>
+        </p>
+    </section>
+<?php endif; ?>
+
+<section class="comentarios-list container">
+    <h2 class="translatable" data-translate-id="comments">Comentarios</h2>
+    <?php
+    $stmt = $mysqli->prepare("SELECT c.comentario, c.fecha, u.correo FROM comentarios c
+                              JOIN usuarios u ON c.idusuario = u.idusuario
+                              WHERE c.idnoticia = ?
+                              ORDER BY c.fecha DESC");
+    $stmt->bind_param("i", $idnoticia);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    if ($resultado->num_rows > 0) {
+        while ($row = $resultado->fetch_assoc()) {
+            echo "<div class='comentario'>";
+            echo "<p><strong class='dynamic-deepl'>" . htmlspecialchars($row['correo']) . "</strong> <span class='translatable' data-translate-id='date-label'>comentó el</span> " . date("d/m/Y H:i", strtotime($row['fecha'])) . ":</p>";
+            echo "<p>" . nl2br(htmlspecialchars($row['comentario'])) . "</p>";
+            echo "<hr>";
+            echo "</div>";
+        }
+    } else {
+        echo "<p class='translatable' data-translate-id='no-comments'>No hay comentarios aún. ¡Sé el primero en comentar!</p>";
+    }
+
+    $stmt->close();
+    ?>
+</section>
+    <footer class="footer">
+        <div class="footer-content container">
+            <p id="footer-text">&copy; 2025 EcoEnergy - Energía Sostenible</p>
+        </div>
+    </footer>
+<script src="diccionariolocal.js"></script>
 </body>
 </html>
-

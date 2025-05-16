@@ -5,7 +5,35 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Definir el mensaje de error (si existe)
+// Incluir archivo de configuración de la base de datos
+require_once "ConfigsDB.php";
+
+// Si se envió el formulario
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $correo = $_POST['correo'];
+    $contrasena = $_POST['contraseña'];
+
+    // Conectar con la base de datos
+    $mysqli = getDBConnection();
+    $query = "SELECT * FROM usuarios WHERE correo = ? AND contraseña = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('ss', $correo, $contrasena);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    // Verificar credenciales
+    if ($resultado->num_rows > 0) {
+        $_SESSION['usuario'] = $correo;
+        header("Location: indexsi.php");
+        exit();
+    } else {
+        $_SESSION['error_login'] = "Correo o contraseña incorrectos.";
+        header("Location: iniciosesion.php");
+        exit();
+    }
+}
+
+// Definir el mensaje de error si existe
 $error_login = isset($_SESSION['error_login']) ? $_SESSION['error_login'] : '';
 unset($_SESSION['error_login']); // Borrar el error después de mostrarlo
 ?>
@@ -40,9 +68,9 @@ unset($_SESSION['error_login']); // Borrar el error después de mostrarlo
                     </div>
 
                     <div class="input-field">
-                      <i class='bx bx-lock-alt'></i>
-                      <input type="password" name="contraseña" id="login-password" placeholder="Contraseña" required autocomplete="on" />
-                      <i class="bx bx-show toggle-password" id="toggle-login-password"></i> 
+                        <i class='bx bx-lock-alt'></i>
+                        <input type="password" name="contraseña" id="login-password" placeholder="Contraseña" required autocomplete="on" />
+                        <i class="bx bx-show toggle-password" id="toggle-login-password"></i> 
                     </div>
 
                     <div class="remember-forgot">
@@ -57,28 +85,27 @@ unset($_SESSION['error_login']); // Borrar el error después de mostrarlo
 
                 <!-- Formulario de Registro con Confirmar Contraseña -->
                 <form action="registro.php" method="POST" class="sign-up-form" onsubmit="return validateRegister(event)">
-                  <h2 class="title">Regístrate</h2>
-                                    
-                  <div class="input-field">
-                    <i class='bx bx-envelope'></i>
-                    <input type="email" name="correo" id="register-email" placeholder="Email" required />
-                  </div>
-                                    
-                  <div class="input-field">
-                    <i class='bx bx-lock-alt'></i>
-                    <input type="password" name="contraseña" id="register-password" placeholder="Contraseña" required autocomplete="off" />
-                    <i class="bx bx-show toggle-password" id="toggle-register-password"></i>
-                  </div>
-                                    
-                  <div class="input-field">
-                    <i class='bx bx-lock-alt'></i>
-                    <input type="password" name="confirmar_contraseña" id="confirm-password" placeholder="Confirmar Contraseña" required autocomplete="off" />
-                    <i class="bx bx-show toggle-password" id="toggle-confirm-password"></i>
-                  </div>
-                                    
-                  <input type="submit" class="btn" value="Registrarse" />
+                    <h2 class="title">Regístrate</h2>
+                                        
+                    <div class="input-field">
+                        <i class='bx bx-envelope'></i>
+                        <input type="email" name="correo" id="register-email" placeholder="Email" required />
+                    </div>
+                                        
+                    <div class="input-field">
+                        <i class='bx bx-lock-alt'></i>
+                        <input type="password" name="contraseña" id="register-password" placeholder="Contraseña" required autocomplete="off" />
+                        <i class="bx bx-show toggle-password" id="toggle-register-password"></i>
+                    </div>
+                                        
+                    <div class="input-field">
+                        <i class='bx bx-lock-alt'></i>
+                        <input type="password" name="confirmar_contraseña" id="confirm-password" placeholder="Confirmar Contraseña" required autocomplete="off" />
+                        <i class="bx bx-show toggle-password" id="toggle-confirm-password"></i>
+                    </div>
+                                        
+                    <input type="submit" class="btn" value="Registrarse" />
                 </form>
-
             </div>
         </div>
 
