@@ -237,7 +237,7 @@ session_start();
                       </div>";
             }
         } else {
-            echo "<p class=\"text-center\">No hay más noticias disponibles.</p>";
+           echo "<p class=\"text-center dynamic-deepl\">No hay más noticias disponibles.</p>";
         }
         ?>
     </div>
