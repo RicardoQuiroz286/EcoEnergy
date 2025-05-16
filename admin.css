@@ -44,7 +44,7 @@ body {
 }
 
 .sidebar a:hover {
-    background: #34495e;
+    background: #27ae60;
     color: #ecf0f1;
     transform: translateX(5px);
 }
@@ -61,7 +61,7 @@ body {
 }
 
 h1 {
-    margin-left: 280px;
+    margin-left: 160px;
     border-bottom: 3px solid #27ae60; 
     font-weight: 700;
     margin-bottom: 30px;
@@ -128,7 +128,7 @@ h2 {
     box-shadow: 0 1px 15px rgba(0, 0, 0, 0.05);
     width: 80%; /* Reduce el tamaño de la tabla */
     margin-top: 30px;
-    margin-left: 300px;
+    margin-left: 200px;
     margin-right: auto;
 }
 
@@ -185,4 +185,113 @@ h2 {
         font-size: 12px; /* Reduce aún más el tamaño de la fuente en pantallas pequeñas */
         padding: 8px; /* Reduce el padding */
     }
+}
+
+.logout-btn {
+    background-color: #dc3545;
+    color: white !important;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}
+
+/* Estilos para el modal de cierre de sesión */
+#logoutModal .modal-header {
+    background-color: #27ae60;
+    border-bottom: 1px solid #dee2e6;
+}
+
+#logoutModal .modal-title {
+    color: #fbfbfb;
+    font-weight: 600;
+}
+
+#confirmLogout {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+#confirmLogout:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Estilos para el modal de publicación */
+#publishModal .modal-header {
+    background-color: #27ae60;
+    border-bottom: 1px solid #dee2e6;
+}
+
+#publishModal .modal-title {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+#confirmPublish {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+#confirmPublish:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+/* Estilos para el modal de éxito */
+#successModal .modal-header {
+    background-color: #28a745;
+    border-bottom: 1px solid #218838;
+}
+
+#successModal .modal-title {
+    color: white;
+    font-weight: 600;
+}
+
+
+
+/* Estilos para el modal de eliminación */
+#deleteModal .modal-header {
+    background-color: #27ae60;
+    border-bottom: 1px solid #dee2e6;
+}
+
+#deleteModal .modal-title {
+    color: #fbfbfb;
+    font-weight: 600;
+}
+
+#confirmDelete {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+#confirmDelete:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+
+/* Estilos para el modal de guardar cambios */
+#saveChangesModal .modal-header {
+    background-color: #27ae60;
+    border-bottom: 1px solid #dee2e6;
+}
+
+#saveChangesModal .modal-title {
+    color: #fbfbfb;
+    font-weight: 600;
+}
+
+#confirmSaveChanges {
+    background-color: #27ae60;
+    border-color: #27ae60;
+}
+
+#confirmSaveChanges:hover {
+    background-color: #219653;
+    border-color: #1e8449;
 }

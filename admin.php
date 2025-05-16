@@ -38,6 +38,7 @@ $conn->close();
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="admin.css">
+    
 </head>
 <body>
     <!-- Sidebar -->
@@ -46,32 +47,36 @@ $conn->close();
         <a href="#" id="btn-dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
         <a href="#" id="btn-crear"><i class="fas fa-plus-circle"></i> Crear Noticia</a>
         <a href="#" id="btn-noticias"><i class="fas fa-newspaper"></i> Gestionar Noticias</a>
+        <!-- Agregar botón de cerrar sesión al final -->
+        <div class="mt-auto"> <!-- Esto lo coloca al final -->
+            <a href="#" id="btn-logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+        </div>
     </div>
 
     <!-- Contenido principal -->
     <div class="content">
         <!-- Sección Dashboard (visible por defecto) -->
-<div id="dashboard-section">
-    <h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card text-white bg-primary mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Noticias Publicadas</h5>
-                    <p class="card-text display-4"><?php echo $total_noticias; ?></p>
+        <div id="dashboard-section">
+            <h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card text-white bg-primary mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Noticias Publicadas</h5>
+                            <p class="card-text display-4"><?php echo $total_noticias; ?></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card text-white bg-info mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Usuarios</h5>
+                            <p class="card-text display-4"><?php echo $total_usuarios; ?></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card text-white bg-info mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Usuarios</h5>
-                    <p class="card-text display-4"><?php echo $total_usuarios; ?></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
         <!-- Sección Crear Noticia -->
         <div id="crear-section" style="display: none;">
@@ -134,18 +139,16 @@ $conn->close();
                     </div>
                 </div>
             </form>
-        </div>
-
 
             <!-- Vista previa -->
-            <div id="noticia-preview" class="noticia-preview">
+            <div id="noticia-preview" class="noticia-preview" style="display: none;">
                 <h3 id="preview-titulo">Título de la Noticia</h3>
                 <div class="meta">
                     <span id="preview-autor">Autor</span> | 
                     <span id="preview-fecha">Fecha</span> | 
                     <span id="preview-categoria">Categoría</span>
                 </div>
-                <img id="preview-imagen" src="" alt="Imagen de la noticia" style="display: none;">
+                <img id="preview-imagen" src="" alt="Imagen de la noticia" style="display: none; max-width: 100%; height: auto;">
                 <div id="preview-contenido" class="contenido">
                     Contenido de la noticia aparecerá aquí...
                 </div>
@@ -154,14 +157,7 @@ $conn->close();
 
         <!-- Sección Gestionar Noticias -->
         <div id="noticias-section" style="display: none;">
-            <h1><i class="fas fa-newspaper"></i> Gestión de Noticias</h1>
-            
-            <div class="d-flex justify-content-between mb-3">
-                <button class="btn btn-success" onclick="mostrarSeccion('crear')">
-                    <i class="fas fa-plus"></i> Nueva Noticia
-                </button>
-                
-            </div>
+            <h1><i class="fas fa-newspaper"></i> Gestión de Noticias</h1>       
 
             <table class="table table-striped table-hover">
                 <thead class="table-light">
@@ -178,8 +174,6 @@ $conn->close();
                     <!-- Las noticias se cargarán aquí dinámicamente -->
                 </tbody>
             </table>
-            
-            
         </div>
     </div>
 
@@ -215,23 +209,12 @@ $conn->close();
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label>Imagen Actual</label>
-                                <img id="editImagenActual" src="" class="img-thumbnail mb-2 d-block">
+                                <img id="editImagenActual" src="" class="img-thumbnail mb-2 d-block" style="max-width: 100%; height: auto;">
                             </div>
                             <div class="mb-3">
                                 <label>Nueva Imagen (opcional)</label>
-                                <input type="file" id="editImagen" class="form-control mb-2">
-                            </div>
-                            <div class="mb-3">
-                                <label>Categoría</label>
-                                <select id="editCategoria" class="form-select">
-                                    <option value="energia">Energía</option>
-                                    <option value="sostenibilidad">Sostenibilidad</option>
-                                    <option value="tecnologia">Tecnología</option>
-                                </select>
-                            </div>
-                            <div class="form-check form-switch mb-3">
-                                <input class="form-check-input" type="checkbox" id="editDestacada">
-                                <label class="form-check-label" for="editDestacada">Destacada</label>
+                                <input type="file" id="editImagen" class="form-control mb-2" accept="image/*">
+                                <img id="preview-imagen-edit" src="" class="img-thumbnail mb-2 d-none" style="max-width: 100%; height: auto;">
                             </div>
                         </div>
                     </div>
@@ -248,262 +231,118 @@ $conn->close();
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Mostrar secciones según el botón clickeado
-        document.querySelectorAll('.sidebar a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = this.id.replace('btn-', '');
-                mostrarSeccion(target);
-            });
-        });
-
-        function mostrarSeccion(seccion) {
-            // Ocultar todas las secciones
-            document.querySelectorAll('.content > div').forEach(div => {
-                div.style.display = 'none';
-            });
-            
-            // Mostrar la sección seleccionada
-            document.getElementById(`${seccion}-section`).style.display = 'block';
-            
-            // Si es la sección de noticias, actualizar la tabla
-            if (seccion === 'noticias') {
-                actualizarTabla();
-            }
-        }
-
-        // Mostrar vista previa de la noticia
-        function mostrarPreview() {
-            const titulo = document.getElementById('titulo').value;
-            const autor = document.getElementById('autor').value;
-            const fecha = document.getElementById('fecha').value;
-            const contenido = document.getElementById('contenido').value;
-            const categoria = document.getElementById('categoria').value;
-            const imagen = document.getElementById('imagen').files[0];
-            
-            document.getElementById('preview-titulo').textContent = titulo || "Título de la Noticia";
-            document.getElementById('preview-autor').textContent = autor || "Autor";
-            document.getElementById('preview-fecha').textContent = formatearFecha(fecha) || "Fecha";
-            document.getElementById('preview-categoria').textContent = categoria || "Categoría";
-            document.getElementById('preview-contenido').textContent = contenido || "Contenido de la noticia aparecerá aquí...";
-            
-            if (imagen) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('preview-imagen').src = e.target.result;
-                    document.getElementById('preview-imagen').style.display = 'block';
-                }
-                reader.readAsDataURL(imagen);
-            } else {
-                document.getElementById('preview-imagen').style.display = 'none';
-            }
-            
-            document.getElementById('noticia-preview').style.display = 'block';
-        }
-
-        function formatearFecha(fecha) {
-            if (!fecha) return '';
-            const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
-            return new Date(fecha).toLocaleDateString('es-ES', opciones);
-        }
-
-        // Funciones para gestionar noticias
-        function actualizarTabla() {
-            fetch("cargar_noticias.php")
-                .then(response => response.json())
-                .then(data => {
-                    let tabla = document.getElementById('tablaNoticias');
-                    tabla.innerHTML = '';  // Limpiar la tabla antes de agregar los nuevos datos
-
-                    if (data.length === 0) {
-                        // Si no hay noticias, muestra un mensaje
-                        tabla.innerHTML = '<tr><td colspan="6" class="text-center">No hay noticias disponibles.</td></tr>';
-                        return;  // Salir si no hay datos
-                    }
-
-                    // Crear el HTML para todas las filas de noticias
-                    let filas = '';
-                    data.forEach(noticia => {
-                        filas += `
-                            <tr>
-                                <td>${noticia.idnoticia}</td>
-                                <td>${noticia.titulo}</td>
-                                <td>${noticia.autor}</td>
-                                <td>${formatearFecha(noticia.fecha)}</td>
-                                <td><span class="badge bg-success">Publicada</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-warning" onclick="editarNoticia(${noticia.idnoticia})">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger" onclick="eliminarNoticia(${noticia.idnoticia})">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-info" onclick="verNoticia(${noticia.idnoticia})">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
-                    });
-
-                    // Asignar todas las filas al innerHTML de la tabla
-                    tabla.innerHTML = filas;
-                })
-                .catch(error => {
-                    console.error("Error al cargar noticias:", error);
-                    // Muestra un mensaje en caso de error
-                    document.getElementById('tablaNoticias').innerHTML = '<tr><td colspan="6" class="text-center text-danger">Hubo un error al cargar las noticias.</td></tr>';
-                });
-        }
-
-        function agregarNoticia() {
-            let formData = new FormData(document.getElementById('formulario'));
-
-            fetch("guardar_noticia.php", { 
-                method: "POST", 
-                body: formData 
-            })
-            .then(response => response.json())  // Convertir la respuesta a JSON
-            .then(data => {  // Manejar la respuesta en caso de éxito o error
-                console.log(data);  // Verifica los datos que recibe la respuesta
-                if (data.status === "success") {
-                    alert("Noticia agregada correctamente");
-                    document.getElementById('formulario').reset();
-                    // Redirigir a la página de administración de noticias
-
-                    window.location.href = 'admin.php'; // o la página que desees
-                } else {
-                    console.error("Error en la respuesta:", data);
-                    alert("Error al agregar noticia: " + data.message);
-                }
-            })
-            .catch(error => console.error("Error al enviar datos:", error));  // Manejo de errores
-        }
-
-
-
-        function eliminarNoticia(id) {
-            if (confirm("¿Estás seguro de que deseas eliminar esta noticia?")) {
-                fetch("eliminar_noticia.php", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: "idnoticia=" + id
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data); // Verifica la respuesta del servidor
-                    if (data.status === "success") {
-                        alert("Noticia eliminada correctamente");
-                        actualizarTabla();
-                    } else {
-                        alert("Error al eliminar noticia: " + data.message);
-                    }
-                })
-                .catch(error => console.error("Error al eliminar noticia:", error));
-            }
-        }
-
-        function editarNoticia(id) {
-            fetch("obtener_noticia.php?idnoticia=" + id)
-                .then(response => response.json())
-                .then(noticia => {
-                    document.getElementById("editId").value = noticia.idnoticia;
-                    document.getElementById("editTitulo").value = noticia.titulo;
-                    document.getElementById("editAutor").value = noticia.autor;
-                    document.getElementById("editFecha").value = noticia.fecha;
-                    document.getElementById("editContenido").value = noticia.informacion;
-                    document.getElementById("editImagenActual").src = "/EcoEnergy-main/uploads/" + noticia.imagen;
-                    document.getElementById("editCategoria").value = noticia.categoria || "energia";
-                    document.getElementById("editDestacada").checked = noticia.destacada == 1;
-
-                    // Mostrar el modal
-                    new bootstrap.Modal(document.getElementById("modalEditar")).show();
-                })
-                .catch(error => console.error("Error al obtener noticia:", error));
-        }
-
-        function guardarEdicion() {
-            let formData = new FormData();
-            formData.append("idnoticia", document.getElementById("editId").value);
-            formData.append("titulo", document.getElementById("editTitulo").value);
-            formData.append("autor", document.getElementById("editAutor").value);
-            formData.append("fecha", document.getElementById("editFecha").value);
-            formData.append("informacion", document.getElementById("editContenido").value);
-            formData.append("categoria", document.getElementById("editCategoria").value);
-            formData.append("destacada", document.getElementById("editDestacada").checked ? '1' : '0');
-    
-            const imagenFile = document.getElementById("editImagen").files[0];
-            if (imagenFile) {
-                formData.append("imagen", imagenFile);
-            }
-
-            // Verifica que los datos se están agregando correctamente
-            for (let pair of formData.entries()) {
-                console.log(pair[0] + ': ' + pair[1]);
-            }
-
-            fetch("editar_noticia.php", { method: "POST", body: formData })
-            .then(response => response.text())  // Cambiado a text() para ver la respuesta cruda
-            .then(text => {
-                console.log("Respuesta cruda:", text);  // Muestra la respuesta cruda
-
-                try {
-                    const data = JSON.parse(text);  // Intenta parsear como JSON
-                    if (data.status === "success") {
-                        alert("Noticia actualizada correctamente");
-                        actualizarTabla();
-                        const modal = bootstrap.Modal.getInstance(document.getElementById("modalEditar"));
-                        modal.hide();
-                    } else {
-                        alert("Error al actualizar noticia: " + data.message);
-                    }
-                } catch (e) {
-                    console.error("No se pudo parsear como JSON:", e);
-                    console.error("Respuesta recibida:", text);  // Muestra lo que se recibió si no es JSON
-                }
-            })
-            .catch(error => console.error("Error al actualizar noticia:", error));
-        }
-
-        function verNoticia(id) {
-            fetch('obtener_noticia.php?idnoticia=' + id)
-                .then(response => response.json())
-                .then(noticia => {
-                    if (noticia && noticia.titulo) {
-                        document.getElementById('vistaTitulo').textContent = noticia.titulo;
-                        document.getElementById('vistaImagen').src = "/EcoEnergy-main/uploads/" + noticia.imagen;
-                        document.getElementById('vistaContenido').textContent = noticia.informacion;
-                        document.getElementById('vistaFecha').textContent = noticia.fecha;
-
-                        const vistaPreviaModal = new bootstrap.Modal(document.getElementById('modalVistaPrevia'));
-                        vistaPreviaModal.show();
-                    } else {
-                        alert("No se encontró la noticia con ID: " + id);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error al obtener la noticia:', error);
-                });
-        }
-    </script>
+    <!-- Modal de Vista Previa -->
     <div class="modal fade" id="modalVistaPrevia" tabindex="-1" aria-labelledby="modalVistaPreviaLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalVistaPreviaLabel">Vista Previa de la Noticia</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalVistaPreviaLabel">Vista Previa de la Noticia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <h3 id="vistaTitulo"></h3>
+                    <img id="vistaImagen" src="" alt="Imagen de la noticia" class="img-fluid mb-3" />
+                    <p id="vistaContenido"></p>
+                    <p><strong>Publicado el:</strong> <span id="vistaFecha"></span></p>
+                </div>
             </div>
-            <div class="modal-body">
-              <h3 id="vistaTitulo"></h3>
-              <img id="vistaImagen" src="" alt="Imagen de la noticia" class="img-fluid mb-3" />
-              <p id="vistaContenido"></p>
-              <p><strong>Publicado el:</strong> <span id="vistaFecha"></span></p>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
+
+    <!-- Modal de confirmación para cerrar sesión -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Confirmar cierre de sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro que deseas cerrar sesión?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmLogout">Cerrar sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación para publicar noticia -->
+    <div class="modal fade" id="publishModal" tabindex="-1" aria-labelledby="publishModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="publishModalLabel">Confirmar publicación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro que deseas publicar esta noticia?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" id="confirmPublish">Publicar</button>
+                </div>
+            </div>
+        </div>
+    </div>                                                                                                                                                                
+
+    <!-- Modal de éxito -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="successModalLabel">Éxito</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="successMessage">Noticia publicada correctamente</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación para eliminar noticia -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro que deseas eliminar esta noticia? Esta acción no se puede deshacer.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación para guardar cambios -->
+    <div class="modal fade" id="saveChangesModal" tabindex="-1" aria-labelledby="saveChangesModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="saveChangesModalLabel">Confirmar cambios</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro que deseas guardar los cambios realizados a esta noticia?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmSaveChanges">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
 </body>
 </html>
