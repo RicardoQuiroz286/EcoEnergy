@@ -11,7 +11,7 @@ header('Content-Type: application/json');
 $inputJSON = file_get_contents('php://input');
 
 // Guardar el JSON recibido para depuración
-file_put_contents('debug_input.txt', $inputJSON);
+//file_put_contents('debug_input.txt', $inputJSON);
 
 // Decodificar el JSON a un array asociativo
 $input = json_decode($inputJSON, true);
@@ -39,7 +39,7 @@ $postFields[] = "auth_key=" . urlencode($apiKey);
 $postFieldsString = implode("&", $postFields);
 
 // 🔍 Guardar lo que se enviará para depuración
-file_put_contents("debug_request.txt", print_r($postFields, true));
+//file_put_contents("debug_request.txt", print_r($postFields, true));
 
 // OPCIONAL: guardar lo que se envía para depuración
 // file_put_contents("debug_request.txt", http_build_query($postFields));
@@ -54,7 +54,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, [
 ]);
 
 $response = curl_exec($ch);
-file_put_contents("debug_response.txt", $response);
+//file_put_contents("debug_response.txt", $response);
 
 
 // Verifica errores de conexión

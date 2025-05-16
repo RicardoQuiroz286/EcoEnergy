@@ -12,6 +12,34 @@ session_start();
     <link rel="stylesheet" href="menu.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+      <style>
+        .language-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .language-option {
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            outline: none;
+            transition: transform 0.2s;
+        }
+
+        .language-option img {
+            width: 48px;
+            height: 32px;
+            border: 2px solid transparent;
+            border-radius: 4px;
+        }
+
+        .language-option.selected img {
+            border-color: #007bff;
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 
 <body>
@@ -49,10 +77,14 @@ session_start();
                 <?php endif; ?>
             </li>
             <li>
-                <select id="language-selector">
-                    <option value="es">Español</option>
-                    <option value="en">English</option>
-                </select>
+                <div id="language-selector" class="language-selector">
+                    <button class="language-option" data-lang="es">
+                        <img src="https://flagcdn.com/w40/es.png" alt="Español">
+                    </button>
+                    <button class="language-option" data-lang="en">
+                        <img src="https://flagcdn.com/w40/gb.png" alt="English">
+                    </button>
+                </div>
             </li>
         </ul>
     </nav>
