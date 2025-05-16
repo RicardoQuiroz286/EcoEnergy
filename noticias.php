@@ -13,14 +13,14 @@
             <img src="images/eco_logo.png" alt="Eco Blog Logo" class="logo">
             <nav class="navbar">
                 <ul>
-                    <li><a href="indexsi.php" id="nav-home">Inicio</a></li>
-                    <li><a href="noticias.php" id="nav-news">Más Noticias</a></li>
+                    <li><a href="indexsi.php" id="nav-home" class="translatable" data-translate-id="nav-home">Inicio</a></li>
+                    <li><a href="noticias.php" id="nav-news" class="translatable" data-translate-id="nav-news">Más Noticias</a></li>
                 </ul>
             </nav>
         </div>
         <div class="header-content container">
-            <h1 id="header-title">Últimas Noticias</h1>
-            <p id="header-subtitle">Mantente informado sobre las novedades en energía sostenible.</p>
+            <h1 id="header-title" class="translatable" data-translate-id="header-title">Últimas Noticias</h1>
+            <p id="header-subtitle" class="translatable" data-translate-id="header-subtitle">Manténgase informado de las últimas noticias sobre energía sostenible</p>
         </div>
     </header>
     
@@ -46,11 +46,11 @@
                     echo "
                     <div class='news-card'>
                         <img src='$imagen' alt='$titulo'>
-                        <h3>$titulo</h3>
-                        <p><strong>Autor:</strong> $autor</p>
-                        <p><strong>Fecha:</strong> $fecha</p>
-                        <p>$contenido</p>
-                        <a href='noticia_detalle.php?id=$idnoticia' class='btn'>Leer más</a>
+                        <h3 class='dynamic-deepl'>$titulo</h3>
+                        <p><strong class='translatable' data-translate-id='author-label'>Autor:</strong> <span class='dynamic-deepl'>$autor</span></p>
+                        <p><strong class='translatable' data-translate-id='date-label'>Fecha:</strong> $fecha</p>
+                        <p class='dynamic-deepl'>$contenido</p>
+                        <a href='noticia_detalle.php?id=$idnoticia' class='btn dynamic-deepl'>Leer más</a>
                     </div>";
                 }
             } else {
@@ -64,13 +64,9 @@
         <div class="footer-content container">
             <p id="footer-text">&copy; 2025 EcoEnergy - Energía Sostenible</p>
         </div>
-        <select id="language-selector">
-            <option value="es">Español</option>
-            <option value="en">English</option>
-        </select>
     </footer>
     
-    <script src="translateNoticias.js"></script>
+<script src="diccionariolocal.js"></script>
 </body>
 </html>
 

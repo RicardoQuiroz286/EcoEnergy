@@ -24,16 +24,16 @@ session_start();
             <label for="menu"></label>
             <nav class="navbar">
                 <ul>
-                    <li><a href="noticias.php" id="nav-news">Mas noticias</a></li>
+                    <li><a href="noticias.php" id="nav-news" class="translatable" data-translate-id="nav-news">Mas noticias</a></li>
                     <?php
                     if (isset($_SESSION['usuario'])) {
-                        echo '<li><a href="cerrar_sesion.php" id="nav-logout">Cerrar sesión</a></li>';
+                        echo '<li><a href="cerrar_sesion.php" id="nav-logout" class="translatable" data-translate-id="nav-logout">Cerrar sesión</a></li>';
                     } else {
-                        echo '<li><a href="inicio_sesion.php" id="nav-login">Iniciar sesión</a></li>';
+                        echo '<li><a href="inicio_sesion.php" id="nav-login"  class="translatable" data-translate-id="nav-login">Iniciar sesión</a></li>';
                     }
                     ?>
                     <li>
-                        <select id="language-selector" onchange="changeLanguage(this.value)">
+                        <select id="language-selector">
                             <option value="es">Español</option>
                             <option value="en">English</option>
                         </select>
@@ -43,8 +43,8 @@ session_start();
         </div>
 
         <div class="header-content container">
-            <h1 id="header-title">ECO BLOG</h1>
-            <p id="header-description">
+            <h1 id="header-title" class = "translatable">ECO BLOG</h1>
+            <p id="header-description" class="translatable" data-translate-id="header-description">
                 Bienvenidos a EcoBlog, un espacio dedicado a promover la energía sostenible 
                 y el acceso a fuentes limpias de energía para todos. Aquí encontrarás información 
                 sobre energías renovables, eficiencia energética y consejos para reducir tu huella 
@@ -56,9 +56,9 @@ session_start();
     <!-- Sección de información sobre ODS 7 -->
     <section class="coffee">
         <div class="coffe-content container">
-            <h2 id="section-title-1">¿Qué es el ODS 7?</h2>
-            <p class="txt-p" id="section-description-1">
-                La ODS 7 forma parte de los Objetivos de Desarrollo Sostenible de la ONU y busca garantizar el acceso universal a una energía asequible, fiable, sostenible y moderna. Algunos de sus principales objetivos incluyen:
+            <h2 id="section-title-1" class="translatable" data-translate-id="section-title-1">¿Qué es el ODS 7?</h2>
+            <p class="txt-p translatable" id="section-description-1" data-translate-id="section-description-1">
+                El ODS 7 forma parte de los Objetivos de Desarrollo Sostenible de la ONU y busca garantizar el acceso universal a una energía asequible, fiable, sostenible y moderna. Algunos de sus principales objetivos incluyen:
             </p>
         </div>
     </section>
@@ -66,25 +66,25 @@ session_start();
     <!-- Sección de metas del ODS 7 -->
     <main class="services">
         <div class="services-content container">
-            <h2 id="section-title-2">METAS DEL ODS 7</h2>
+            <h2 id="section-title-2" class="translatable" data-translate-id="section-title-2">METAS DEL ODS 7</h2>
 
             <div class="blog-content">
                 <div class="blog-2">
                     <img src="images/blog1.jpg" alt=""> 
                     <i class='bx bx-leaf'></i>
-                    <h3 id="goal-1">Garantizar el acceso universal a servicios energéticos asequibles.</h3> 
+                    <h3 id="goal-1"  class="translatable" data-translate-id="goal-1">Garantizar el acceso universal a servicios energéticos asequibles.</h3> 
                 </div>
 
                 <div class="blog-2">
                     <img src="images/blog2.jpg" alt=""> 
                     <i class='bx bx-buildings'></i>
-                    <h3 id="goal-2">Aumentar la proporción de energías renovables en la matriz energética global.</h3>    
+                    <h3 id="goal-2"  class="translatable" data-translate-id="goal-2">Aumentar la proporción de energías renovables en la matriz energética global.</h3>    
                 </div>
 
                 <div class="blog-2">
                     <img src="images/blog3.jpg" alt="">
                     <i class='bx bxs-bar-chart-alt-2'></i>
-                    <h3 id="goal-3">Duplicar la tasa de mejora de la eficiencia energética. </h3> 
+                    <h3 id="goal-3"  class="translatable" data-translate-id="goal-3">Duplicar la tasa de mejora de la eficiencia energética. </h3> 
                 </div>
             </div>
         </div>
@@ -93,7 +93,7 @@ session_start();
     <!-- Sección de lo más reciente -->
 <section class="coffee">
     <div class="coffe-content container">
-        <h2 id="recent-news-title">LO MÁS RECIENTE</h2>
+        <h2 id="recent-news-title" class="translatable" data-translate-id="recent-news-title">LO MÁS RECIENTE</h2>
     </div>
 </section>
 
@@ -114,65 +114,62 @@ session_start();
                 $imagen = !empty($row['imagen']) ? "uploads/" . htmlspecialchars($row['imagen']) : "images/default.jpg";
                 $contenido = substr(htmlspecialchars($row['informacion']), 0, 400) . "...";
 
-                // Alternamos el diseño basado en el contador
-                if ($counter % 2 == 0) {
-                    // Diseño con imagen a la izquierda
-                    echo "<div class=\"row align-items-center py-4\">
-                            <div class=\"col-md-6 imagen-noticia text-center\">
-                                <img src=\"$imagen\" alt=\"Imagen de $titulo\" class=\"img-fluid noticia-img\">
-                            </div>
-                            <div class=\"col-md-6 general-1\">
-                                <div class=\"contenido-flex\">
-                                    <div class=\"texto-noticia\">
-                                        <h1 id=\"news-title-$idnoticia\">$titulo</h1>
-                                        <p id=\"news-description-$idnoticia\">
-                                            <strong>Autor:</strong> $autor<br>
-                                            <strong>Fecha:</strong> $fecha<br>
-                                            $contenido
-                                        </p>
-                                        <div class=\"text-center\">
-                                            <a href=\"noticia_detalle.php?id=$idnoticia\" class=\"btn-1\" id=\"news-link-$idnoticia\">Más información...</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                          </div>";
-                } else {
-                    // Diseño con imagen a la derecha
-                    echo "<div class=\"row align-items-center py-4\">
-                            <div class=\"col-md-6 general-1\">
-                                <div class=\"contenido-flex\">
-                                    <div class=\"texto-noticia\">
-                                        <h1 id=\"news-title-$idnoticia\">$titulo</h1>
-                                        <p id=\"news-description-$idnoticia\">
-                                            <strong>Autor:</strong> $autor<br>
-                                            <strong>Fecha:</strong> $fecha<br>
-                                            $contenido
-                                        </p>
-                                        <div class=\"text-center\">
-                                            <a href=\"noticia_detalle.php?id=$idnoticia\" class=\"btn-1\" id=\"news-link-$idnoticia\">Más información...</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class=\"col-md-6 imagen-noticia text-center\">
-                                <img src=\"$imagen\" alt=\"Imagen de $titulo\" class=\"img-fluid noticia-img\">
-                            </div>
-                          </div>";
-                }
-                $counter++; // Incrementamos el contador
-            }
-        } else {
-            echo "<p class=\"text-center\">No hay noticias recientes disponibles.</p>";
-        }
-        ?>
-    </div>
+                 // Estructura común para ambos diseños
+                 $noticiaHTML = "
+                 <h1 id=\"news-title-$idnoticia\" class=\"translatable\" data-translate-id=\"news-title-$idnoticia\">
+                     <span class=\"dynamic-deepl\">$titulo</span>
+                 </h1>
+                 <p id=\"news-description-$idnoticia\">
+                     <strong class=\"translatable\" data-translate-id=\"author-label\">Autor:</strong>
+                     <span class=\"dynamic-deepl\">$autor</span><br>
+                     <strong class=\"translatable\" data-translate-id=\"date-label\">Fecha:</strong>
+                     <span class=\"dynamic-deepl\">$fecha</span><br>
+                     <span class=\"dynamic-deepl\">$contenido</span>
+                 </p>
+                 <div class=\"text-center\">
+                     <a href=\"noticia_detalle.php?id=$idnoticia\" class=\"btn-1 translatable\" data-translate-id=\"more-info\">Más información...</a>
+                 </div>";
+ 
+                 if ($counter % 2 == 0) {
+                     echo "<div class=\"row align-items-center py-4\">
+                             <div class=\"col-md-6 imagen-noticia text-center\">
+                                 <img src=\"$imagen\" alt=\"Imagen de $titulo\" class=\"img-fluid noticia-img\">
+                             </div>
+                             <div class=\"col-md-6 general-1\">
+                                 <div class=\"contenido-flex\">
+                                     <div class=\"texto-noticia\">
+                                         $noticiaHTML
+                                     </div>
+                                 </div>
+                             </div>
+                           </div>";
+                 } else {
+                     echo "<div class=\"row align-items-center py-4\">
+                             <div class=\"col-md-6 general-1\">
+                                 <div class=\"contenido-flex\">
+                                     <div class=\"texto-noticia\">
+                                         $noticiaHTML
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class=\"col-md-6 imagen-noticia text-center\">
+                                 <img src=\"$imagen\" alt=\"Imagen de $titulo\" class=\"img-fluid noticia-img\">
+                             </div>
+                           </div>";
+                 }
+                 $counter++;
+             }
+         } else {
+             echo "<p class=\"text-center\">No hay noticias recientes disponibles.</p>";
+         }
+         ?>
+     </div>
 </section>
 
     <!-- Sección de más noticias -->
     <section class="blog container">
-    <h2 id="more-news-title">MAS NOTICIAS</h2>
-    <p id="more-news-description">¡¡Ponte al día con todas las noticias!!</p>
+    <h2 id="more-news-title" class="translatable" data-translate-id="more-news-title">MAS NOTICIAS</h2>
+    <p id="more-news-description" class="translatable" data-translate-id="more-news-description">¡¡Ponte al día con todas las noticias!!</p>
 
     <div class="blog-content">
         <?php
@@ -186,7 +183,7 @@ session_start();
 
                 echo "<div class=\"blog-1\">
                         <a href=\"noticia_detalle.php?id=$idnoticia\"><img src=\"$imagen\" alt=\"Imagen de $titulo\"></a>
-                        <a href=\"noticia_detalle.php?id=$idnoticia\"><h3 id=\"news-$idnoticia\">$titulo</h3></a>
+                        <a href=\"noticia_detalle.php?id=$idnoticia\"><h3 id=\"news-$idnoticia\" class=\"translatable\" data-translate-id=\"news-$idnoticia\">$titulo</h3></a>
                       </div>";
             }
         } else {
@@ -195,7 +192,8 @@ session_start();
         ?>
     </div>
 
-    <a href="noticias.php" class="btn-1" id="more-news-link">Más noticias</a>
+    <a href="noticias.php" class="btn-1 translatable" id="more-news-link" data-translate-id="more-news-link">Más noticias</a>
+
 </section>
 
 
@@ -206,6 +204,6 @@ session_start();
         </div>
     </footer>
 
+<script src="diccionariolocal.js"></script>
 </body>
-
 </html>
