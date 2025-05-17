@@ -4,6 +4,8 @@ const dictionary = {
       "nav-login": "Iniciar sesión",
       "nav-home": "Inicio",
       "nav-logout": "Cerrar sesión",
+      "logout": "Cerrar sesion",
+      "login-status": "No has iniciado sesion",
       "nav-backnews": "Volver a Noticias",
       "header-title":"Ultimas Noticias",
       "header-subtitle":"Manténgase informado de las últimas noticias sobre energía sostenible",
@@ -27,6 +29,7 @@ const dictionary = {
       "comments": "Comentarios",
       "no-comments": "No hay comentarios aún. ¡Sé el primero en comentar!",
       "comment-placeholder": "Escribe tu comentario aquí...",
+      "sign-up-btn-text": "Registrate",
 
       // Añade todos los translate-id usados en tu HTML
     },
@@ -35,6 +38,8 @@ const dictionary = {
       "nav-login": "Log in",
       "nav-home": "Home",
       "nav-logout": "Log out",
+      "logout": "Log out",
+      "login-status": "You are not logged in",
       "nav-backnews": "Back to news",
       "header-title":"Last News",
       "header-subtitle":"Stay informed about the latest news on sustainable energy",
@@ -58,6 +63,7 @@ const dictionary = {
       "comments": "Comments",
       "no-comments": "There are no comments yet, be the first to comment!",
       "comment-placeholder": "Write your comment here...",
+      "sign-up-btn-text": "Sign up",
       
       // Añade traducción de todos los translate-id
     }
@@ -77,38 +83,54 @@ const dictionary = {
   }
   
   function traducirDinamicos(lang) {
-    const dinamicos = document.querySelectorAll(".dynamic-deepl");
-    const textos = Array.from(dinamicos).map(el => el.innerText.trim());
+  const dinamicos = document.querySelectorAll(".dynamic-deepl");
+  const items = [];
 
-     // 🔍 DEBUG
-    console.log("Traduciendo dinámicos:", textos);
-  
-    if (textos.length === 0) return;
+  dinamicos.forEach(el => {
+    // Verifica si tiene texto visible
+    const text = el.innerText.trim();
+    if (text) {
+      items.push({ el, type: "text", value: text });
+    }
 
-    console.log("Tipo de 'textos':", typeof textos);
-    console.log("¿Es array?", Array.isArray(textos));
-    console.log("Contenido:", textos);
+    // Verifica atributos como placeholder, title, value
+    ["placeholder", "title", "value", "alt", "aria-label"].forEach(attr => {
+      if (el.hasAttribute(attr)) {
+        const val = el.getAttribute(attr).trim();
+        if (val) {
+          items.push({ el, type: attr, value: val });
+        }
+      }
+    });
+  });
 
-    fetch("servidorprueba.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text: textos,
-        target_lang: lang.toUpperCase()
-      })
+  if (items.length === 0) return;
+
+  const textos = items.map(item => item.value);
+
+  fetch("servidorprueba.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      text: textos,
+      target_lang: lang.toUpperCase()
     })
+  })
     .then(res => res.json())
     .then(data => {
-         // ✅ Agrega esta línea para ver la respuesta del servidor
-        console.log("Respuesta DeepL:", data);
       if (data.translations) {
         data.translations.forEach((t, i) => {
-          dinamicos[i].innerText = t.text;
+          const item = items[i];
+          if (item.type === "text") {
+            item.el.innerText = t.text;
+          } else {
+            item.el.setAttribute(item.type, t.text);
+          }
         });
       }
     })
     .catch(err => console.error("Error al traducir dinámico:", err));
-  }
+}
   
   // Observador que detecta cuando se agregan nodos al DOM y traduce textos locales
   const observer = new MutationObserver(mutations => {
