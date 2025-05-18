@@ -255,3 +255,30 @@ body {
     color: #ccc; 
     font-weight: bold;
 }
+
+.language-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+.language-option {
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    outline: none;
+    transition: transform 0.2s;
+}
+
+.language-option img {
+    width: 48px;
+    height: 32px;
+    border: 2px solid transparent;
+    border-radius: 4px;
+}
+
+.language-option.selected img {
+    border-color: #007bff;
+    transform: scale(1.1);
+}

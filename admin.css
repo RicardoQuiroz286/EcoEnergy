@@ -5,6 +5,8 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Sidebar Estilizado */
@@ -16,6 +18,7 @@ body {
     position: fixed;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 }
 
 .sidebar h4 {
@@ -58,6 +61,7 @@ body {
 .content {
     margin-left: 250px;
     padding: 30px;
+    transition: margin-left 0.3s ease;
 }
 
 h1 {
@@ -126,7 +130,7 @@ h2 {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 1px 15px rgba(0, 0, 0, 0.05);
-    width: 80%; /* Reduce el tamaño de la tabla */
+    width: 80%;
     margin-top: 30px;
     margin-left: 200px;
     margin-right: auto;
@@ -137,15 +141,15 @@ h2 {
     color: white;
     font-weight: 600;
     text-align: center;
-    padding: 10px; /* Reduce el padding */
-    font-size: 14px; /* Reduce el tamaño de la fuente */
+    padding: 10px;
+    font-size: 14px;
 }
 
 .table tbody td {
-    padding: 10px; /* Reduce el padding */
+    padding: 10px;
     text-align: center;
     vertical-align: middle;
-    font-size: 14px; /* Reduce el tamaño de la fuente */
+    font-size: 14px;
 }
 
 .table tbody tr:hover {
@@ -165,28 +169,7 @@ h2 {
     margin-top: 30px;
 }
 
-/* Responsividad */
-@media (max-width: 768px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-    
-    .content {
-        margin-left: 0;
-    }
-    
-    .row {
-        flex-direction: column;
-    }
-
-    .table th, .table td {
-        font-size: 12px; /* Reduce aún más el tamaño de la fuente en pantallas pequeñas */
-        padding: 8px; /* Reduce el padding */
-    }
-}
-
+/* BOTÓN DE CIERRE DE SESIÓN */
 .logout-btn {
     background-color: #dc3545;
     color: white !important;
@@ -198,36 +181,47 @@ h2 {
     background-color: #c82333;
 }
 
-/* Estilos para el modal de cierre de sesión */
-#logoutModal .modal-header {
+/* MODALES */
+#logoutModal .modal-header,
+#deleteModal .modal-header,
+#publishModal .modal-header,
+#saveChangesModal .modal-header {
     background-color: #27ae60;
     border-bottom: 1px solid #dee2e6;
 }
 
-#logoutModal .modal-title {
+#logoutModal .modal-title,
+#deleteModal .modal-title,
+#saveChangesModal .modal-title {
     color: #fbfbfb;
     font-weight: 600;
-}
-
-#confirmLogout {
-    background-color: #dc3545;
-    border-color: #dc3545;
-}
-
-#confirmLogout:hover {
-    background-color: #c82333;
-    border-color: #bd2130;
-}
-
-/* Estilos para el modal de publicación */
-#publishModal .modal-header {
-    background-color: #27ae60;
-    border-bottom: 1px solid #dee2e6;
 }
 
 #publishModal .modal-title {
     color: #ffffff;
     font-weight: 600;
+}
+
+#successModal .modal-header {
+    background-color: #28a745;
+    border-bottom: 1px solid #218838;
+}
+
+#successModal .modal-title {
+    color: white;
+    font-weight: 600;
+}
+
+#confirmLogout,
+#confirmDelete {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+#confirmLogout:hover,
+#confirmDelete:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
 }
 
 #confirmPublish {
@@ -240,52 +234,6 @@ h2 {
     border-color: #1e7e34;
 }
 
-/* Estilos para el modal de éxito */
-#successModal .modal-header {
-    background-color: #28a745;
-    border-bottom: 1px solid #218838;
-}
-
-#successModal .modal-title {
-    color: white;
-    font-weight: 600;
-}
-
-
-
-/* Estilos para el modal de eliminación */
-#deleteModal .modal-header {
-    background-color: #27ae60;
-    border-bottom: 1px solid #dee2e6;
-}
-
-#deleteModal .modal-title {
-    color: #fbfbfb;
-    font-weight: 600;
-}
-
-#confirmDelete {
-    background-color: #dc3545;
-    border-color: #dc3545;
-}
-
-#confirmDelete:hover {
-    background-color: #c82333;
-    border-color: #bd2130;
-}
-
-
-/* Estilos para el modal de guardar cambios */
-#saveChangesModal .modal-header {
-    background-color: #27ae60;
-    border-bottom: 1px solid #dee2e6;
-}
-
-#saveChangesModal .modal-title {
-    color: #fbfbfb;
-    font-weight: 600;
-}
-
 #confirmSaveChanges {
     background-color: #27ae60;
     border-color: #27ae60;
@@ -294,4 +242,86 @@ h2 {
 #confirmSaveChanges:hover {
     background-color: #219653;
     border-color: #1e8449;
+}
+
+/* RESPONSIVIDAD */
+@media (max-width: 991px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 15px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .sidebar h4 {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        font-size: 1.3rem;
+    }
+
+    .sidebar a {
+        flex: 1 1 40%;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .table {
+        width: 100%;
+        margin-left: 0;
+        overflow-x: auto;
+    }
+
+    h1 {
+        margin-left: 0;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar a {
+        flex: 1 1 100%;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+
+    .display-4 {
+        font-size: 2rem;
+    }
+
+    .form-control {
+        font-size: 14px;
+    }
+
+    .btn-primary {
+        padding: 8px 20px;
+        font-size: 14px;
+    }
+
+    .table th, .table td {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .noticia-preview {
+        padding: 15px;
+    }
 }

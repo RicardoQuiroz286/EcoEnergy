@@ -1,10 +1,7 @@
 <?php
 session_start(); // Asegura que la sesión esté iniciada
 
-if (!isset($_SESSION['usuario_id'])) {
-    header("Location: inicio_sesion.php");
-    exit;
-}
+
 
 require_once "ConfigsDB.php";
 $mysqli = getDBConnection();
@@ -124,13 +121,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <header class="header">
         <div class="menu container">
             <div class="logo">
-                <a href="indexsi.php">
+                <a href="index.php">
                     <img src="images/Ecologo.png" alt="Logo EcoBlog" style="height: 100px;">
                 </a>
             </div>
             <nav class="navbar">
                 <ul>
-                    <li><a href="indexsi.php" id="nav-home" class="translatable" data-translate-id="nav-home">Inicio</a></li>
+                    <li><a href="index.php" id="nav-home" class="translatable" data-translate-id="nav-home">Inicio</a></li>
                     <li><a href="noticias.php" id="nav-backnews" class="translatable" data-translate-id="nav-backnews">Volver a Noticias</a></li>
                 </ul>
             </nav>

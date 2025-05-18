@@ -44,63 +44,64 @@ session_start();
 
 <body>
 
+        
+
     <header class="header">
-        <div class="menu container">
-    <!-- Logo -->
-    <img src="images/Ecologo.png" alt="Logo EcoBlog" class="logo" style="height: 100px;">
+            <div class="menu container">
+            <!-- Logo -->
+            <img src="images/Ecologo.png" alt="Logo EcoBlog" class="logo" style="height: 100px;">
 
-    <!-- Menú de navegación -->
-    <nav class="navbar">
-        <ul>
-            <li>
-                <a href="noticias.php" id="nav-news" class="translatable" data-translate-id="nav-news">Más noticias</a>
-            </li>
-            <li>
-                <?php if (isset($_SESSION['usuario']) || isset($_SESSION['correo'])): ?>
-                    <h5>
-                        <span class="user-welcome">
-                            <?php 
-                                echo isset($_SESSION['correo']) 
-                                    ? htmlspecialchars($_SESSION['correo']) 
-                                    : htmlspecialchars($_SESSION['usuario']); 
-                            ?>
-                        </span>
-                    </h5>
-                    <a href="cerrar_sesion.php" id="nav-logout" class="translatable" data-translate-id="nav-logout">Cerrar sesión</a>
-                <?php else: ?>
-                    <h5>
-                        <span class="login-status translatable" data-translate-id="login-status">
-                            No has iniciado sesión
-                        </span>
-                    </h5>
-                    <a href="inicio_sesion.php" id="nav-login" class="translatable" data-translate-id="nav-login">Iniciar sesión</a>
-                <?php endif; ?>
-            </li>
-            <li>
-                <div id="language-selector" class="language-selector">
-                    <button class="language-option" data-lang="es">
-                        <img src="https://flagcdn.com/w40/es.png" alt="Español">
-                    </button>
-                    <button class="language-option" data-lang="en">
-                        <img src="https://flagcdn.com/w40/gb.png" alt="English">
-                    </button>
-                </div>
-            </li>
-        </ul>
-    </nav>
-</div>
-
-<!-- Contenido del header -->
-<div class="header-content container">
-    <h1 id="header-title" class="translatable" data-translate-id="header-title">ECO BLOG</h1>
-    <p id="header-description" class="translatable" data-translate-id="header-description">
-        Bienvenidos a EcoBlog, un espacio dedicado a promover la energía sostenible 
-        y el acceso a fuentes limpias de energía para todos. Aquí encontrarás información 
-        sobre energías renovables, eficiencia energética y consejos para reducir tu huella 
-        energética en el día a día.
-    </p>
-</div>
-</header>
+            <!-- Menú de navegación -->
+            <nav class="navbar">
+                <ul>
+                    <li>
+                        <a href="noticias.php" id="nav-news" class="translatable" data-translate-id="nav-news">Más noticias</a>
+                    </li>
+                    <li>
+                        <?php if (isset($_SESSION['usuario']) || isset($_SESSION['correo'])): ?>
+                            <h5>
+                                <span class="user-welcome">
+                                    <?php 
+                                        echo isset($_SESSION['correo']) 
+                                            ? htmlspecialchars($_SESSION['correo']) 
+                                            : htmlspecialchars($_SESSION['usuario']); 
+                                    ?>
+                                </span>
+                            </h5>
+                            <a href="cerrar_sesion.php" id="nav-logout" class="translatable" data-translate-id="nav-logout">Cerrar sesión</a>
+                        <?php else: ?>
+                            <h5>
+                                <span class="login-status translatable" data-translate-id="login-status">
+                                    No has iniciado sesión
+                                </span>
+                            </h5>
+                            <a href="inicio_sesion.php" id="nav-login" class="translatable" data-translate-id="nav-login">Iniciar sesión</a>
+                        <?php endif; ?>
+                    </li>
+                    <li>
+                        <div id="language-selector" class="language-selector">
+                            <button class="language-option" data-lang="es">
+                                <img src="https://flagcdn.com/w40/es.png" alt="Español">
+                            </button>
+                            <button class="language-option" data-lang="en">
+                                <img src="https://flagcdn.com/w40/gb.png" alt="English">
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <!-- Contenido del header -->
+        <div class="header-content container">
+            <h1 id="header-title" class="translatable" data-translate-id="header-title">ECO BLOG</h1>
+            <p id="header-description" class="translatable" data-translate-id="header-description">
+                Bienvenidos a EcoBlog, un espacio dedicado a promover la energía sostenible 
+                y el acceso a fuentes limpias de energía para todos. Aquí encontrarás información 
+                sobre energías renovables, eficiencia energética y consejos para reducir tu huella 
+                energética en el día a día.
+            </p>
+        </div>
+    </header>
 
 
     <!-- Sección de información sobre ODS 7 -->

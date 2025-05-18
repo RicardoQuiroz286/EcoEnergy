@@ -112,31 +112,6 @@ $conn->close();
                             <i class="fas fa-save"></i> Publicar Noticia
                         </button>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title">Opciones Adicionales</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <label for="categoria" class="form-label">Categoría</label>
-                                    <select class="form-select" id="categoria" name="categoria">
-                                        <option value="energia">Energía</option>
-                                        <option value="sostenibilidad">Sostenibilidad</option>
-                                        <option value="tecnologia">Tecnología</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="tags" class="form-label">Etiquetas (separadas por comas)</label>
-                                    <input type="text" class="form-control" id="tags" name="tags">
-                                </div>
-                                <div class="form-check form-switch mb-3">
-                                    <input class="form-check-input" type="checkbox" id="destacada" name="destacada">
-                                    <label class="form-check-label" for="destacada">Noticia Destacada</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </form>
 

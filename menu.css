@@ -6,18 +6,21 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    text-decoration: none;
+    
     list-style: none;
 }
 
 body {
     font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
 }
 
 /* Contenedor */
 .container {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
 }
 
 /* Header */
@@ -29,6 +32,7 @@ body {
     min-height: 70vh;
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 /* Menú */
@@ -40,6 +44,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 20px;
+    z-index: 100;
 }
 
 .logo {
@@ -59,6 +65,7 @@ body {
     color: #FFFDFC;
     display: block;
     font-weight: 600;
+    transition: color 0.3s ease;
 }
 
 .menu .navbar ul li a:hover {
@@ -81,6 +88,8 @@ body {
 /* Contenido header */
 .header-content {
     text-align: center;
+    padding: 0 20px;
+    width: 100%;
 }
 
 .header-content h1 {
@@ -94,7 +103,6 @@ body {
 .header-content p {
     font-size: 30px;
     color: #C5C5C5;
-    padding: 0 100px;
     margin-bottom: 25px;
 }
 
@@ -104,6 +112,8 @@ body {
     background-color: #CE967B;
     color: #F9FAFC;
     text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
 }
 
 .btn-1:hover {
@@ -126,36 +136,45 @@ body {
     line-height: 70px;
     color: #323337;
     text-transform: uppercase;
-    padding: 0 250px;
     margin-bottom: 15px;
 }
 
 .txt-p {
     font-size: 30px;
     color: #414247;
-    padding: 0 40px;
     margin-bottom: 35px;
 }
 
 .coffee-group {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
     margin-bottom: 50px;
+    gap: 30px;
 }
 
 .coffee-1 {
     padding: 0 25px;
     text-align: center;
+    flex: 1 1 300px;
+    max-width: 350px;
 }
 
 .coffee-1 img {
     width: 200px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.coffee-1 img:hover {
+    transform: scale(1.05);
 }
 
 .coffee-img {
     position: absolute;
     top: 0;
     right: 0;
+    display: none;
 }
 
 .coffee-1 h3 {
@@ -165,25 +184,6 @@ body {
 }
 
 /* Services */
-.imagen-noticia img {
-    width: 100%;
-    max-width: 800px;  /* Ajusta según tu diseño */
-    height: 100%;      /* Altura fija */
-    object-fit: cover;  /* Recorta la imagen para que encaje sin deformarse */
-    border-radius: 10px;
-}
-
-.noticia-img {
-    width: 100%;
-    max-width: 500px;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 15px;
-}
-
-
-
-
 .services {
     background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(images/ec2.jpg);
     background-position: center center;
@@ -209,18 +209,21 @@ body {
     font-size: 16px;
     color: #C5C5C5;
     margin-bottom: 50px;
-    padding: 0 100px;
 }
 
 .services-group {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
     margin-bottom: 50px;
 }
 
 .services-1 {
-    padding: 0 100px;
+    padding: 0 20px;
     text-align: center;
+    flex: 1 1 250px;
+    max-width: 300px;
 }
 
 .services-1 img {
@@ -236,73 +239,35 @@ body {
 /* General */
 .general {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .general-1 {
-    width: 50%;
-    padding: 100px 250px 100px 100px;
+    width: 100%;
+    padding: 60px 20px;
     background-color: #E1E2E6;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    
-    
-}   
+    text-align: center;
+}
 
 .general-2,
 .general-3 {
-    background-position: center center;
-    background-repeat: no-repeat;
+    width: 100%;
+    height: 300px;
     background-size: cover;
-    width: 50%;
-}
-
-
-
-/* Tipografía general */
-h2 {
-    font-size: 100px;
-    line-height: 100px;
-    color: #323337;
-   
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-h1 {
-    font-size: 70px;
-    line-height: 100px;
-    color: #323337;
-    text-transform: uppercase;
-    margin-bottom: 60px;
-    text-align: center;
-}
-
-h3 {
-    font-size: 35px;
-    line-height: 30px;
-    color: #323337;
-    margin-bottom: 50px;
-    text-align: center;
-}
-
-p {
-    font-size: 25px;
-    color: #414247;
-    margin: 25px 0 45px 0;
-    text-align: center;
+    background-position: center;
 }
 
 /* Blog */
 .blog {
-    padding: 50px;
+    padding: 50px 20px;
     text-align: center;
 }
 
 .blog-content {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 700px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
     padding: 20px;
 }
 
@@ -310,54 +275,83 @@ p {
     background-color: #f9f9f9;
     border-radius: 15px;
     padding: 20px;
-    box-shadow: 0 4px 4000px rgba(0, 0, 0, 0.838);
-    margin-left: -300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1 1 300px;
+    max-width: 350px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-1:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .blog-1 img {
-    width: 350px;
+    width: 100%;
+    max-width: 350px;
+    height: 200px;
     border-radius: 15px;
     margin-bottom: 15px;
+    object-fit: cover;
 }
 
 .blog-1 h3 {
     font-size: 20px;
     color: #323337;
-    text-align: center;
 }
 
 .blog-2 {
-    padding: 150px 4px;
-    margin-left: -250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    background-color: transparent;
+    border: none;
 }
 
 .blog-2 img {
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
     border-radius: 15px;
     margin-bottom: 15px;
+    object-fit: cover;
 }
 
 .blog-2 h3 {
-    font-size: 30px;
+    font-size: 24px;
     color: #ffffff;
-    text-align: center;
 }
 
 .blog-2 i {
     color: #ffffff;
-    font-size: 100px;
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.blog-1 a,
+.blog-1 a:visited {
+    color: #323337; /* O el color que prefieras */
+    text-decoration: none;
+}
+
+.blog-1 a:hover {
+    color: #CE967B; /* O el color del hover que desees */
+    text-decoration: none;
 }
 
 /* Footer */
 .footer {
     background: #222;
     text-align: center;
-    padding: 20px 0;
+    padding: 40px 20px;
     margin-top: 70px;
 }
 
 .footer p {
     color: white;
+    font-size: 16px;
 }
 
 .link h3 {
@@ -371,116 +365,257 @@ p {
     color: #C5C5C5;
     display: block;
     margin-bottom: 15px;
+    transition: color 0.3s ease;
 }
 
-/* Responsive */
-@media(max-width: 991px) {
-    .menu {
-        padding: 30px;
-    }
+.link a:hover {
+    color: #CE967B;
+}
 
+/* Imágenes adaptativas */
+.imagen-noticia img {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.noticia-img {
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+/* Tipografía general */
+h2 {
+    font-size: 55px;
+    line-height: 70px;
+    color: #323337;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 70px;
+    line-height: 80px;
+    color: #323337;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+h3 {
+    font-size: 35px;
+    line-height: 40px;
+    color: #323337;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+p {
+    font-size: 18px;
+    color: #414247;
+    margin: 20px 0;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 1200px) {
+    .header-content h1 {
+        font-size: 60px;
+        line-height: 70px;
+    }
+    
+    .header-content p {
+        font-size: 24px;
+    }
+    
+    .coffee-content h2,
+    .services-content h2 {
+        font-size: 45px;
+        line-height: 60px;
+    }
+    
+    .txt-p {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 992px) {
+    .menu {
+        padding: 15px;
+    }
+    
     .menu label {
         display: initial;
     }
-
+    
     .menu .navbar {
         position: absolute;
-        top: 0;
+        top: 100%;
         left: 0;
         right: 0;
         background-color: #323337;
         display: none;
     }
-
+    
     .menu .navbar ul li {
         width: 100%;
+        text-align: center;
     }
-
+    
     #menu:checked ~ .navbar {
         display: initial;
     }
-
-    .header {
-        min-height: 0vh;
+    
+    .header-content h1 {
+        font-size: 50px;
+        line-height: 60px;
     }
-
-    .header-content {
-        padding: 100px 30px;
-    }
-
+    
     .header-content p {
-        padding: 0;
+        font-size: 20px;
     }
-
-    .coffee,
-    .services,
-    .blog {
-        padding: 30px;
+    
+    h1 {
+        font-size: 50px;
+        line-height: 60px;
     }
-
-    .coffee-content h2,
-    .services-content p,
-    .txt-p {
-        padding: 0;
+    
+    h2 {
+        font-size: 40px;
+        line-height: 50px;
     }
-
-    .coffee-group,
-    .services-group {
-        flex-direction: column;
-        margin-bottom: 0;
+    
+    h3 {
+        font-size: 28px;
+        line-height: 35px;
     }
-
-    .services-1 {
-        margin-bottom: 25px;
-    }
-
-    .coffee-img,
-    .general-2,
-    .general-3 {
-        display: none;
-    }
-
-    .general {
-        flex-direction: column;
-    }
-
+    
     .general-1 {
-        width: 100%;
-        padding: 30px;
-        text-align: center;
+        padding: 40px 20px;
     }
-
-    .blog-content {
-        
-        display: grid;
-        grid-template-columns: repeat(4, 1fr); /* Esto define 3 columnas */
-        gap: 2rem;
 }
 
+@media (max-width: 768px) {
+    .header {
+        min-height: 60vh;
     }
-
-    .blog-1,
-    .blog-2 {
-        padding: 0;
+    
+    .header-content h1 {
+        font-size: 40px;
+        line-height: 50px;
+        margin-bottom: 20px;
     }
-
-    .footer {
-        padding: 30px;
+    
+    .header-content p {
+        font-size: 18px;
+        margin-bottom: 20px;
     }
-
-    .footer-content {
-        flex-direction: column;
-        text-align: center;
+    
+    .btn-1 {
+        padding: 10px 25px;
+        font-size: 14px;
     }
+    
+    .coffee,
+    .services {
+        padding: 60px 0;
+    }
+    
+    .coffee-content h2,
+    .services-content h2 {
+        font-size: 36px;
+        line-height: 45px;
+    }
+    
+    .txt-p {
+        font-size: 20px;
+    }
+    
+    .blog-2 img {
+        max-width: 100%;
+    }
+    
+    .blog-2 h3 {
+        font-size: 20px;
+    }
+    
+    .blog-2 i {
+        font-size: 40px;
+    }
+}
 
-/* Logo centrado arriba */
+@media (max-width: 576px) {
+    .header {
+        min-height: 50vh;
+    }
+    
+    .header-content h1 {
+        font-size: 32px;
+        line-height: 40px;
+    }
+    
+    .header-content p {
+        font-size: 16px;
+    }
+    
+    .coffee-content h2,
+    .services-content h2 {
+        font-size: 28px;
+        line-height: 36px;
+    }
+    
+    .txt-p {
+        font-size: 18px;
+    }
+    
+    .coffee-1,
+    .services-1 {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+    
+    .blog-1 {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+    
+    h1 {
+        font-size: 36px;
+        line-height: 45px;
+    }
+    
+    h2 {
+        font-size: 28px;
+        line-height: 36px;
+    }
+    
+    h3 {
+        font-size: 24px;
+        line-height: 30px;
+    }
+    
+    p {
+        font-size: 16px;
+    }
+}
+
+/* Estilos adicionales para el logo y navegación */
 .header-logo {
     text-align: center;
     margin-bottom: 10px;
 }
 
 .logo {
-    height: 80px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Navegación */
@@ -488,13 +623,12 @@ p {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
 }
 
 .navbar ul {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -505,25 +639,115 @@ p {
     align-items: center;
 }
 
-/* Título y descripción */
-.header-content {
-    text-align: center;
-    padding: 30px 20px;
-}
-
-
 .user-welcome {
-    color: #ddd; 
+    color: #ddd;
     font-weight: bold;
+    font-size: 14px;
 }
 
 .login-status {
-    color: #ddd; 
+    color: #ddd;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Ajustes para pantallas pequeñas en el menú */
+@media (max-width: 768px) {
+    .navbar ul {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .navbar ul li a {
+        padding: 15px 20px;
+    }
+    
+    .logo {
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .user-welcome,
+    .login-status {
+        font-size: 12px;
+        text-align: center;
+        padding: 10px;
+    }
+}
+
+/* Estilo base: texto blanco en toda la sección .services */
+.services,
+.services * {
+    color: #FFFFFF !important;
+}
+
+/* Estilo de los íconos */
+.services-1 img,
+.blog-2 i {
+    filter: brightness(0) invert(1) !important;
+    width: 100px;
+    font-size: 60px;
+    display: block;
+    margin: 0 auto 1rem auto;
+}
+
+/* Encabezado principal de la sección */
+.services-content h2 {
+    font-size: 4vw;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     font-weight: bold;
 }
 
+/* Contenedor de las metas (cards) */
+.blog-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    align-items: stretch;
+    text-align: center;
+    padding: 1rem;
+}
 
+/* Cada bloque de meta */
+.blog-2 {
+    flex: 1 1 300px;
+    max-width: 350px;
+    padding: 1rem;
+    background-color: transparent;
+    border: none;
+}
 
+/* Imágenes dentro de las metas */
+.blog-2 img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
 
+/* Texto de cada meta */
+.blog-2 h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
 
+/* Responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+    .services-content h2 {
+        font-size: 6vw;
+        margin-bottom: 1.5rem;
+    }
 
+    .blog-2 {
+        max-width: 100%;
+    }
+
+    .blog-content {
+        flex-direction: column;
+        align-items: center;
+    }
+}

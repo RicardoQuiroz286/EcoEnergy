@@ -17,7 +17,7 @@ session_start();
         <div class="menu container">
             <!-- Logo -->
             <div class="logo">
-                <a href="indexsi.php">
+                <a href="index.php">
                     <img src="images/Ecologo.png" alt="Logo EcoBlog" style="height: 80px;">
                 </a>
             </div>
@@ -25,7 +25,7 @@ session_start();
             <!-- Menú de navegación -->
             <nav class="navbar">
                 <ul>
-                    <li><a href="indexsi.php" id="nav-home" class="translatable" data-translate-id="nav-home">Inicio</a></li>
+                    <li><a href="index.php" id="nav-home" class="translatable" data-translate-id="nav-home">Inicio</a></li>
                     <li><a href="noticias.php" id="nav-news" class="translatable" data-translate-id="nav-news">Más Noticias</a></li>
                     <li>
                         <?php if (isset($_SESSION['correo'])): ?>
@@ -36,7 +36,16 @@ session_start();
                             <a href="inicio_sesion.php" class="login-link translatable" data-translate-id="login">Iniciar sesión</a>
                         <?php endif; ?>
                     </li>
+                    <div id="language-selector" class="language-selector">
+                    <button class="language-option" data-lang="es">
+                        <img src="https://flagcdn.com/w40/es.png" alt="Español">
+                    </button>
+                    <button class="language-option" data-lang="en">
+                        <img src="https://flagcdn.com/w40/gb.png" alt="English">
+                    </button>
+                </div>
                 </ul>
+                
             </nav>
         </div>
         <div class="header-content container">

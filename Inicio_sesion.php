@@ -55,7 +55,7 @@ unset($_SESSION['error_login']); // Borrar el error después de mostrarlo
             <div class="signin-signup">
                 <!-- Formulario de Inicio de Sesión -->
                 <form action="iniciosesion.php" method="POST" class="sign-in-form">
-                    <h2 class="title">Inicia Sesión</h2>
+                    <h2 class="title dynamic-deepl">Inicia Sesión</h2>
 
                     <!-- Mostrar mensaje de error -->
                     <?php if (!empty($error_login)): ?>
@@ -64,47 +64,47 @@ unset($_SESSION['error_login']); // Borrar el error después de mostrarlo
 
                     <div class="input-field">
                         <i class='bx bx-user-circle'></i>
-                        <input type="email" name="correo" id="login-email" placeholder="Correo electrónico" required />
+                        <input type="email" name="correo" placeholder="Correo electrónico" class="dynamic-deepl" required />
                     </div>
 
                     <div class="input-field">
                         <i class='bx bx-lock-alt'></i>
-                        <input type="password" name="contraseña" id="login-password" placeholder="Contraseña" required autocomplete="on" />
+                        <input type="password" name="contraseña" id="login-password" class="dynamic-deepl" placeholder="Contraseña" required autocomplete="on" />
                         <i class="bx bx-show toggle-password" id="toggle-login-password"></i> 
                     </div>
 
                     <div class="remember-forgot">
-                        <label>
+                        <label class="dynamic-deepl">
                             <input type="checkbox" id="remember-me"> Recordar contraseña
                         </label>
-                        <a href="recuperar_contraseña.php" id="forgot-password">¿Olvidaste tu contraseña?</a>
+                        <a href="recuperar_contraseña.php" id="forgot-password" class="dynamic-deepl">¿Olvidaste tu contraseña?</a>
                     </div>
 
-                    <input type="submit" value="Inicia Sesión" class="btn solid" />
+                    <input type="submit" value="Inicia Sesión" class="btn solid dynamic-deepl" />
                 </form>
 
                 <!-- Formulario de Registro con Confirmar Contraseña -->
                 <form action="registro.php" method="POST" class="sign-up-form" onsubmit="return validateRegister(event)">
-                    <h2 class="title">Regístrate</h2>
+                    <h2 class="title dynamic-deepl">Regístrate</h2>
                                         
                     <div class="input-field">
                         <i class='bx bx-envelope'></i>
-                        <input type="email" name="correo" id="register-email" placeholder="Email" required />
+                        <input type="email" name="correo" id="register-email" placeholder="Correo electrónico" class="dynamic-deepl" required />
                     </div>
                                         
                     <div class="input-field">
                         <i class='bx bx-lock-alt'></i>
-                        <input type="password" name="contraseña" id="register-password" placeholder="Contraseña" required autocomplete="off" />
+                        <input type="password" name="contraseña" id="register-password" placeholder="Contraseña" class="dynamic-deepl" required autocomplete="off" />
                         <i class="bx bx-show toggle-password" id="toggle-register-password"></i>
                     </div>
                                         
                     <div class="input-field">
                         <i class='bx bx-lock-alt'></i>
-                        <input type="password" name="confirmar_contraseña" id="confirm-password" placeholder="Confirmar Contraseña" required autocomplete="off" />
+                        <input type="password" name="confirmar_contraseña" id="confirm-password" placeholder="Confirmar Contraseña" class="dynamic-deepl" required autocomplete="off" />
                         <i class="bx bx-show toggle-password" id="toggle-confirm-password"></i>
                     </div>
                                         
-                    <input type="submit" class="btn" value="Registrarse" />
+                    <input type="submit" class="btn dynamic-deepl" value="Registrarse" />
                 </form>
             </div>
         </div>
@@ -112,21 +112,22 @@ unset($_SESSION['error_login']); // Borrar el error después de mostrarlo
         <div class="panels-container">
             <div class="panel left-panel">
                 <div class="content">
-                    <h3>¿Nuevo Aquí?</h3>
-                    <p>¡Regístrate en segundos y empieza a explorar!</p>
-                    <button class="btn transparent" id="sign-up-btn">Regístrate</button>
+                    <h3 class="dynamic-deepl">¿Nuevo Aquí?</h3>
+                    <p class="dynamic-deepl">¡Regístrate en segundos y empieza a explorar!</p>
+                    <button class="btn transparent dynamic-deepl" id="sign-up-btn">Regístrate</button>
                 </div>
             </div>
             <div class="panel right-panel">
                 <div class="content">
-                    <h3>¿Ya tienes cuenta?</h3>
-                    <p>Inicia sesión y continúa explorando</p>
-                    <button class="btn transparent" id="sign-in-btn">Inicia Sesión</button>
+                    <h3 class="dynamic-deepl">¿Ya tienes cuenta?</h3>
+                    <p class="dynamic-deepl">Inicia sesión y continúa explorando</p>
+                    <button class="btn transparent dynamic-deepl" id="sign-in-btn">Inicia Sesión</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="js/app.js"></script>
+    <script src="diccionariolocal.js"></script>
 </body>
 </html>
